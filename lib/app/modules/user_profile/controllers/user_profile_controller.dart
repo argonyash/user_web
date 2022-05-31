@@ -54,8 +54,10 @@ class UserProfileController extends GetxController {
       successCallback: (response, message) {
         print(response);
         hasData.value = true;
-        userProfileModel = UserProfileModel.fromJson(response);
-        print(userProfileModel!.img);
+        UserProfileModelData userProfile =
+            UserProfileModelData.fromJson(response);
+        userProfileModel = userProfile.data;
+        print(userProfileModel!.name.toString() + "sasa");
         print(response);
       },
       failureCallback: (status, message) {

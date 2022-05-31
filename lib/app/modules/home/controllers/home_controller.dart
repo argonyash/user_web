@@ -75,6 +75,7 @@ class HomeController extends GetxController {
     dict["date"] = (!isNullEmptyOrFalse(serverDate))
         ? serverDate
         : DateFormat('yyyy-MM-dd').format(DateTime.now());
+    //dict["date"] = "2022-05-29";
     dict["total"] = "$totalSecond";
     dict["data_st"] = "at_entry";
     // dict["pass"] = passController.value.text;
@@ -172,6 +173,7 @@ class HomeController extends GetxController {
     dict["email"] = box.read(StringConstants.userEmailAddress);
 
     dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    // dict["date"] = "2022-05-29";
 
     dict["data_st"] = "last_record";
 
