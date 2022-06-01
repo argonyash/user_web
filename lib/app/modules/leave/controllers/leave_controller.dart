@@ -131,7 +131,10 @@ class LeaveController extends GetxController {
         if (!isNullEmptyOrFalse(attandanceListModel.data)) {
           attandanceList.clear();
           // print
-          attandanceList.addAll(attandanceListModel.data!);
+          List<Attandance> reverse = [];
+          reverse.addAll(attandanceListModel.data!);
+          //attandanceList.addAll(attandanceListModel.data!);
+          attandanceList.addAll(reverse.reversed.toList());
 
           print(attandanceList.length.toString() + "asa");
         }

@@ -85,6 +85,7 @@ TextFormField getTextFormField(
     cursorColor: appTheme.primaryTheme,
     readOnly: isReadOnly,
     obscureText: textVisible,
+    obscuringCharacter: "*",
     enabled: enable,
     inputFormatters: formator,
     validator: validation,
@@ -93,18 +94,19 @@ TextFormField getTextFormField(
     maxLines: maxLine,
     decoration: InputDecoration(
       filled: isFillColor,
-      fillColor: appTheme.fillColor,
+      fillColor: appTheme.borderColor.withOpacity(0.2),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: appTheme.borderColor),
+        borderSide: BorderSide(color: Colors.transparent),
         borderRadius: BorderRadius.circular(
             (borderRadius == null) ? MySize.size10! : borderRadius),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
             (borderRadius == null) ? MySize.size10! : borderRadius),
-        borderSide: BorderSide(color: appTheme.primaryTheme),
+        borderSide: BorderSide(color: Colors.transparent),
       ),
       border: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.transparent),
         borderRadius: BorderRadius.circular(
             (borderRadius == null) ? MySize.size10! : borderRadius),
       ),

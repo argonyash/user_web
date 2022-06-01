@@ -47,94 +47,141 @@ class HomeView extends GetWidget<HomeController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Card(
-              child: Container(
-                width: MySize.getScaledSizeWidth(350),
-                padding: EdgeInsets.symmetric(
-                    horizontal: MySize.size15!, vertical: MySize.size15!),
-                child: Column(
-                  children: [
-                    StreamBuilder(
-                      stream: Stream.periodic(
-                        const Duration(
-                          seconds: 1,
-                        ),
-                      ),
-                      builder: (context, snapshot) {
-                        return Center(
-                          child: Text(
-                            DateFormat('MM/dd/yyyy EEEE \nhh:mm:ss a').format(
-                              DateTime.now(),
-                            ),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: MySize.size20,
-                              fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  child: Container(
+                    width: MySize.getScaledSizeWidth(350),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MySize.size15!, vertical: MySize.size15!),
+                    child: Column(
+                      children: [
+                        StreamBuilder(
+                          stream: Stream.periodic(
+                            const Duration(
+                              seconds: 1,
                             ),
                           ),
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: MySize.size10!,
-                      ),
-                      child: FlatButton(
-                        color: Colors.blue,
-                        child: Obx(() {
-                          return Text(
-                            (controller.webClockIn.value)
-                                ? "Clock Out"
-                                : "Clock In",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          );
-                        }),
-                        onPressed: () {
-                          if (controller.webClockIn.value) {
-                            _asyncConfirmDialog(context);
-                          } else {
-                            controller.callApiForClockInOrOut(context: context);
-                          }
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: MySize.size10!,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Today's Hours : ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: MySize.size18,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Obx(() {
-                            return Text(
-                              controller.hours.value.toString() +
-                                  " : " +
-                                  controller.minutes.value.toString() +
-                                  " : " +
-                                  controller.second.value.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: MySize.size18,
-                                color: Colors.black,
+                          builder: (context, snapshot) {
+                            return Center(
+                              child: Text(
+                                DateFormat('MM/dd/yyyy EEEE \nhh:mm:ss a')
+                                    .format(
+                                  DateTime.now(),
+                                ),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: MySize.size20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             );
-                          }),
-                        ],
-                      ),
+                          },
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: MySize.size10!,
+                          ),
+                          child: FlatButton(
+                            color: Colors.blue,
+                            child: Obx(() {
+                              return Text(
+                                (controller.webClockIn.value)
+                                    ? "Clock Out"
+                                    : "Clock In",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              );
+                            }),
+                            onPressed: () {
+                              if (controller.webClockIn.value) {
+                                _asyncConfirmDialog(context);
+                              } else {
+                                controller.callApiForClockInOrOut(
+                                    context: context);
+                              }
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: MySize.size10!,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Today's Hours : ",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MySize.size18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Obx(() {
+                                return Text(
+                                  controller.hours.value.toString() +
+                                      " : " +
+                                      controller.minutes.value.toString() +
+                                      " : " +
+                                      controller.second.value.toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: MySize.size18,
+                                    color: Colors.black,
+                                  ),
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                Space.width(15),
+                Card(
+                  child: Container(
+                    width: MySize.getScaledSizeWidth(350),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MySize.size15!, vertical: MySize.size15!),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          box.read(StringConstants.userName),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: MySize.size18,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Space.height(10),
+                        Text(
+                          box.read(StringConstants.userEmailAddress),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: MySize.size18,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Space.height(10),
+                        Text(
+                          box.read(StringConstants.role).toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: MySize.size18,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Space.height(10),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: EdgeInsets.only(

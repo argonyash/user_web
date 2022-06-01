@@ -11,6 +11,7 @@ dependencies:
   dio:
   intl:
   cached_network_image:
+  flutter_svg:
   ntp: ^2.0.0
   get_storage:
   table_sticky_headers:

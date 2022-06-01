@@ -66,6 +66,7 @@ class LoginController extends GetxController {
           Get.offAndToNamed(Routes.HOME);
           box.write(StringConstants.isUserLogIn, true);
           box.write(StringConstants.userName, loginModel.name.toString());
+          box.write(StringConstants.role, loginModel.role.toString());
         } else {
           app
               .resolve<CustomDialogs>()

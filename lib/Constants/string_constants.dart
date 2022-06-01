@@ -4,4 +4,5 @@ class StringConstants {
   static const userPassword = "userPassword";
   static const isUserLogIn = "isUserLogIn";
   static const userName = "userName";
+  static const role = "role";
 }
