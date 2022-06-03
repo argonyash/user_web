@@ -20,7 +20,7 @@ class HomeDrawerView extends GetWidget<HomeDrawerController> {
                     margin: EdgeInsets.zero,
                     child: Center(
                       child: Image(
-                        image: ExactAssetImage("assets/logo.png"),
+                        image: ExactAssetImage("assets/logo1.png"),
                       ),
                     ),
                   ),

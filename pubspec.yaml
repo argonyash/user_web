@@ -40,3 +40,7 @@ flutter:
   assets:
     - assets/
 
+
+#flutter_native_splash:
+#  color: "#ffffff"
+#  image: "assets/logo.png"
