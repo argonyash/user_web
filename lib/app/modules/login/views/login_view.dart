@@ -56,7 +56,7 @@ class LoginView extends GetWidget<LoginController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image(
-                        image: AssetImage("assets/image.png"),
+                        image: AssetImage("assets/login_canvas.png"),
                         width: (ResponsiveWidget.isMediumScreen(context))
                             ? MySize.getScaledSizeWidth(400)
                             : MySize.getScaledSizeWidth(700),
@@ -99,7 +99,7 @@ class LoginView extends GetWidget<LoginController> {
                                 child: getTextFormField(
                                   textEditingController:
                                       controller.emailController.value,
-                                  borderRadius: MySize.size20,
+                                  borderRadius: MySize.size200,
                                   isFillColor: true,
                                   hintText: "Email",
                                   validation: (input) => input!.isValidEmail()
@@ -125,7 +125,7 @@ class LoginView extends GetWidget<LoginController> {
                                     textEditingController:
                                         controller.passController.value,
                                     //size: MySize.size70,
-                                    borderRadius: MySize.size20,
+                                    borderRadius: MySize.size200,
                                     isFillColor: true,
                                     hintText: "Password",
                                     validation: (input) => input!.isNotEmpty
@@ -206,7 +206,7 @@ class LoginView extends GetWidget<LoginController> {
                                 padding: EdgeInsets.only(
                                   top: MySize.getScaledSizeHeight(40),
                                 ),
-                                child: InkWell(
+                                child: GestureDetector(
                                   onTap: () {
                                     if (controller.formKey.currentState!
                                         .validate()) {
@@ -232,14 +232,18 @@ class LoginView extends GetWidget<LoginController> {
                                           context: context);
                                     }
                                   },
-                                  child: button(
-                                    backgroundColor: Colors.blue,
-                                    textColor: appTheme.whiteColor,
-                                    fontsize: MySize.size23,
-                                    radius: MySize.size20!,
-                                    width: MySize.getScaledSizeWidth(220),
-                                    fontWeight: FontWeight.w500,
-                                    title: "LOG IN",
+                                  // child: button(
+                                  //   backgroundColor: Colors.blue,
+                                  //   textColor: appTheme.whiteColor,
+                                  //   fontsize: MySize.size23,
+                                  //   radius: MySize.size20!,
+                                  //   width: MySize.getScaledSizeWidth(220),
+                                  //   fontWeight: FontWeight.w500,
+                                  //   title: "LOG IN",
+                                  // ),
+                                  child: Image(
+                                    image: AssetImage("assets/log_in.png"),
+                                    height: MySize.getScaledSizeHeight(130),
                                   ),
                                 ),
                               ),

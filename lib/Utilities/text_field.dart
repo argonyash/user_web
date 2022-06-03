@@ -98,17 +98,17 @@ TextFormField getTextFormField(
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.transparent),
         borderRadius: BorderRadius.circular(
-            (borderRadius == null) ? MySize.size10! : borderRadius),
+            (borderRadius == null) ? MySize.size100! : borderRadius),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
-            (borderRadius == null) ? MySize.size10! : borderRadius),
+            (borderRadius == null) ? MySize.size100! : borderRadius),
         borderSide: BorderSide(color: Colors.transparent),
       ),
       border: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.transparent),
         borderRadius: BorderRadius.circular(
-            (borderRadius == null) ? MySize.size10! : borderRadius),
+            (borderRadius == null) ? MySize.size100! : borderRadius),
       ),
       contentPadding: EdgeInsets.only(
         left: MySize.size20!,

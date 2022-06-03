@@ -1,3 +1,7 @@
+import 'package:argon_user/app/modules/attandance/views/attandance_view.dart';
+import 'package:argon_user/app/modules/attandance_new/views/attandance_new_view.dart';
+import 'package:argon_user/app/modules/home/views/home_view.dart';
+import 'package:argon_user/app/modules/leave/views/leave_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -29,212 +33,264 @@ class HomeMainView extends GetWidget<HomeMainController> {
       //       ),
       //     ],
       //   ),
-      body: Container(
-        height: MySize.screenHeight,
-        width: MySize.screenWidth,
-        // padding: EdgeInsets.symmetric(
-        //   horizontal: MySize.size15!,
-        //   vertical: MySize.size15!,
-        // ),
-        child: Row(
-          children: [
-            Container(
-              height: MySize.screenHeight,
-              width: MySize.getScaledSizeWidth(320),
-              decoration: BoxDecoration(
-                color: Color(0xfff3fbff),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(MySize.size52!),
-                  bottomRight: Radius.circular(MySize.size52!),
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Image(
-                      image: ExactAssetImage("assets/logo1.png"),
-                      width: MySize.getScaledSizeWidth(320),
-                    ),
+      body: Obx(() {
+        return Container(
+          height: MySize.screenHeight,
+          width: MySize.screenWidth,
+          // padding: EdgeInsets.symmetric(
+          //   horizontal: MySize.size15!,
+          //   vertical: MySize.size15!,
+          // ),
+          child: Row(
+            children: [
+              Container(
+                height: MySize.screenHeight,
+                width: MySize.getScaledSizeWidth(320),
+                decoration: BoxDecoration(
+                  color: Color(0xfff3fbff),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(MySize.size52!),
+                    bottomRight: Radius.circular(MySize.size52!),
                   ),
-                  Space.height(30),
-                  InkWell(
-                    onTap: () {
-                      if (Get.currentRoute != Routes.HOME) {
-                        Get.offAllNamed(Routes.HOME);
-                      }
-                    },
-                    child: Container(
-                      width: MySize.getScaledSizeWidth(320),
-                      height: MySize.size52,
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: MySize.getScaledSizeWidth(80)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image(
-                                    image:
-                                        AssetImage("assets/ic_dashboard.png"),
-                                    height: MySize.getScaledSizeHeight(30),
-                                    width: MySize.getScaledSizeHeight(30),
-                                    fit: BoxFit.fill,
-                                  ),
-                                  Space.width(12),
-                                  Text(
-                                    "Dashboard",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: MySize.size20,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Image(
+                        image: ExactAssetImage("assets/logo1.png"),
+                        width: MySize.getScaledSizeWidth(320),
+                      ),
+                    ),
+                    Space.height(30),
+                    InkWell(
+                      onTap: () {
+                        //  if (Get.currentRoute != Routes.HOME) {
+                        //Get.offAllNamed(Routes.HOME);
+                        controller.currentWidget = HomeView();
+                        controller.index.value = 0;
+
+                        //}
+                      },
+                      child: Container(
+                        width: MySize.getScaledSizeWidth(320),
+                        height: MySize.size52,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: MySize.getScaledSizeWidth(80)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image(
+                                      image:
+                                          AssetImage("assets/ic_dashboard.png"),
+                                      height: MySize.getScaledSizeHeight(30),
+                                      width: MySize.getScaledSizeHeight(30),
+                                      fit: BoxFit.fill,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            right: 0,
-                            child: Container(
-                              width: MySize.size7,
-                              height: MySize.size52,
-                              decoration: BoxDecoration(
-                                color: Color(0xff01a7fe),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(MySize.size12!),
-                                  bottomLeft: Radius.circular(MySize.size12!),
+                                    Space.width(12),
+                                    Text(
+                                      "Dashboard",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: MySize.size20,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Space.height(10),
-                  InkWell(
-                    onTap: () {
-                      if (Get.currentRoute != Routes.ATTANDANCE) {
-                        Get.offAllNamed(Routes.ATTANDANCE);
-                      }
-                    },
-                    child: Container(
-                      width: MySize.getScaledSizeWidth(320),
-                      height: MySize.size52,
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: MySize.getScaledSizeWidth(80)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image(
-                                    image:
-                                        AssetImage("assets/ic_Attandance.png"),
-                                    height: MySize.getScaledSizeHeight(30),
-                                    width: MySize.getScaledSizeHeight(30),
-                                    fit: BoxFit.fill,
-                                  ),
-                                  Space.width(12),
-                                  Text(
-                                    "Attandance",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: MySize.size20,
+                            Positioned(
+                              right: 0,
+                              child: Container(
+                                height: MySize.size52,
+                                child: Center(
+                                  child: AnimatedContainer(
+                                    width: (controller.index.value == 0)
+                                        ? MySize.size7
+                                        : 00,
+                                    height: (controller.index.value == 0)
+                                        ? MySize.size52
+                                        : 0,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff01a7fe),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft:
+                                            Radius.circular(MySize.size12!),
+                                        bottomLeft:
+                                            Radius.circular(MySize.size12!),
+                                      ),
                                     ),
+                                    duration: Duration(milliseconds: 300),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                          // Positioned(
-                          //   right: 0,
-                          //   child: Container(
-                          //     width: MySize.size7,
-                          //     height: MySize.size52,
-                          //     decoration: BoxDecoration(
-                          //       color: Color(0xff01a7fe),
-                          //       borderRadius: BorderRadius.only(
-                          //         topLeft: Radius.circular(MySize.size12!),
-                          //         bottomLeft: Radius.circular(MySize.size12!),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Space.height(10),
-                  InkWell(
-                    onTap: () {
-                      if (Get.currentRoute != Routes.LEAVE) {
-                        Get.offAllNamed(Routes.LEAVE);
-                      }
-                    },
-                    child: Container(
-                      width: MySize.getScaledSizeWidth(320),
-                      height: MySize.size52,
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: MySize.getScaledSizeWidth(80)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image(
-                                    image: AssetImage("assets/ic_leave.png"),
-                                    height: MySize.getScaledSizeHeight(30),
-                                    width: MySize.getScaledSizeHeight(30),
-                                    fit: BoxFit.fill,
-                                  ),
-                                  Space.width(12),
-                                  Text(
-                                    "Leave",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: MySize.size20,
+                    Space.height(10),
+                    InkWell(
+                      onTap: () {
+                        // if (Get.currentRoute != Routes.ATTANDANCE) {
+                        //Get.offAllNamed(Routes.ATTANDANCE);
+                        print("atatn");
+                        controller.currentWidget = AttandanceView();
+                        print("atatn");
+                        controller.count.value++;
+                        controller.index.value = 1;
+
+                        // }
+                      },
+                      child: Container(
+                        width: MySize.getScaledSizeWidth(320),
+                        height: MySize.size52,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: MySize.getScaledSizeWidth(80)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image(
+                                      image: AssetImage(
+                                          "assets/ic_Attandance.png"),
+                                      height: MySize.getScaledSizeHeight(30),
+                                      width: MySize.getScaledSizeHeight(30),
+                                      fit: BoxFit.fill,
                                     ),
-                                  ),
-                                ],
+                                    Space.width(12),
+                                    Text(
+                                      "Attandance",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: MySize.size20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          // Positioned(
-                          //   right: 0,
-                          //   child: Container(
-                          //     width: MySize.size7,
-                          //     height: MySize.size52,
-                          //     decoration: BoxDecoration(
-                          //       color: Color(0xff01a7fe),
-                          //       borderRadius: BorderRadius.only(
-                          //         topLeft: Radius.circular(MySize.size12!),
-                          //         bottomLeft: Radius.circular(MySize.size12!),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
+                            Positioned(
+                              right: 0,
+                              child: Container(
+                                height: MySize.size52,
+                                child: Center(
+                                  child: AnimatedContainer(
+                                    width: (controller.index.value == 1)
+                                        ? MySize.size7
+                                        : 00,
+                                    height: (controller.index.value == 1)
+                                        ? MySize.size52
+                                        : 0,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff01a7fe),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft:
+                                            Radius.circular(MySize.size12!),
+                                        bottomLeft:
+                                            Radius.circular(MySize.size12!),
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 300),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    Space.height(10),
+                    InkWell(
+                      onTap: () {
+                        //if (Get.currentRoute != Routes.LEAVE) {
+                        // controller.currentWidget!.value = Container();
+                        controller.currentWidget = LeaveView();
+                        controller.count.value++;
+                        controller.index.value = 2;
+                        // }
+                      },
+                      child: Container(
+                        width: MySize.getScaledSizeWidth(320),
+                        height: MySize.size52,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: MySize.getScaledSizeWidth(80)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image(
+                                      image: AssetImage("assets/ic_leave.png"),
+                                      height: MySize.getScaledSizeHeight(30),
+                                      width: MySize.getScaledSizeHeight(30),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    Space.width(12),
+                                    Text(
+                                      "Leave",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: MySize.size20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            //if (controller.index.value == 2)
+                            Positioned(
+                              right: 0,
+                              child: Container(
+                                height: MySize.size52,
+                                child: Center(
+                                  child: AnimatedContainer(
+                                    width: (controller.index.value == 2)
+                                        ? MySize.size7
+                                        : 00,
+                                    height: (controller.index.value == 2)
+                                        ? MySize.size52
+                                        : 0,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff01a7fe),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft:
+                                            Radius.circular(MySize.size12!),
+                                        bottomLeft:
+                                            Radius.circular(MySize.size12!),
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 300),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Space.width(30),
-          ],
-        ),
-      ),
+              Space.width(30),
+              if (controller.count.value >= 0) controller.currentWidget!
+            ],
+          ),
+        );
+      }),
     );
   }
 }
