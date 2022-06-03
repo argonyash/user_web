@@ -265,7 +265,7 @@ class HomeView extends GetWidget<HomeController> {
                           return InkWell(
                             onTap: () {
                               if (controller.webClockIn.value) {
-                                _asyncConfirmDialog(context);
+                                _asyncConfirmDialog(context, controller);
                               } else {
                                 controller.callApiForClockInOrOut(
                                     context: context);
@@ -587,7 +587,7 @@ class HomeView extends GetWidget<HomeController> {
     );
   }
 
-  getDataText(int i, int j) {
+  getDataText(int i, int j, controller) {
     if (i == 0) {
       return controller.clockInOutModel!
           .data![controller.clockInOutModel!.data!.length - (j + 1)].st;
@@ -597,7 +597,7 @@ class HomeView extends GetWidget<HomeController> {
     }
   }
 
-  _asyncConfirmDialog(BuildContext context) async {
+  _asyncConfirmDialog(BuildContext context, controller) async {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -613,7 +613,10 @@ class HomeView extends GetWidget<HomeController> {
           ),
           actionsAlignment: MainAxisAlignment.center,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            borderRadius: BorderRadius.all(
+              Radius.circular(32.0),
+            ),
+          ),
           content: const Text('Are you sure you want to clock out time?'),
           actions: <Widget>[
             // FlatButton(
@@ -637,7 +640,7 @@ class HomeView extends GetWidget<HomeController> {
                     textColor: Colors.black,
                     backgroundColor: Color(0xfff9fbfc),
                     width: 120,
-                    radius: 20,
+                    radius: 100,
                     fontsize: 18),
               ),
             ),
@@ -656,7 +659,7 @@ class HomeView extends GetWidget<HomeController> {
                     title: "Clock out",
                     backgroundColor: Color(0xff01a7fe),
                     width: 120,
-                    radius: 20,
+                    radius: 100,
                     fontsize: 18),
               ),
             ),

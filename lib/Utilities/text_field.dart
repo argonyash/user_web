@@ -72,6 +72,7 @@ TextFormField getTextFormField(
     Widget? suffixIcon,
     bool textVisible = false,
     double? borderRadius,
+    Color? borderColor,
     bool? isFillColor = false,
     Widget? prefixIcon,
     List<TextInputFormatter>? formator,
@@ -96,17 +97,20 @@ TextFormField getTextFormField(
       filled: isFillColor,
       fillColor: appTheme.borderColor.withOpacity(0.2),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.transparent),
+        borderSide: BorderSide(
+            color: (borderColor == null) ? Colors.transparent : borderColor),
         borderRadius: BorderRadius.circular(
             (borderRadius == null) ? MySize.size100! : borderRadius),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
             (borderRadius == null) ? MySize.size100! : borderRadius),
-        borderSide: BorderSide(color: Colors.transparent),
+        borderSide: BorderSide(
+            color: (borderColor == null) ? Colors.transparent : borderColor),
       ),
       border: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.transparent),
+        borderSide: BorderSide(
+            color: (borderColor == null) ? Colors.transparent : borderColor),
         borderRadius: BorderRadius.circular(
             (borderRadius == null) ? MySize.size100! : borderRadius),
       ),

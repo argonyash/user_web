@@ -1,3 +1,4 @@
+import 'package:argon_user/Constants/color_constant.dart';
 import 'package:argon_user/Constants/sizeConstant.dart';
 import 'package:argon_user/Utilities/text_field.dart';
 import 'package:argon_user/Utilities/utility_functions.dart';
@@ -42,7 +43,12 @@ class LeaveView extends GetWidget<LeaveController> {
                             return Container(
                               width: MySize.getScaledSizeWidth(500),
                               child: SfDateRangePicker(
-                                onSelectionChanged: _onSelectionChanged,
+                                onSelectionChanged:
+                                    (DateRangePickerSelectionChangedArgs args) {
+                                  controller.range.value = args.value;
+
+                                  // print(range.endDate);
+                                },
                                 selectionMode:
                                     DateRangePickerSelectionMode.range,
                                 //showTodayButton: true,
@@ -75,6 +81,7 @@ class LeaveView extends GetWidget<LeaveController> {
                                 maxLine: 3,
                                 textEditingController:
                                     controller.reasonController.value,
+                                borderColor: appTheme.textGrayColor,
                                 validation: (val) {
                                   if (val!.isEmpty) {
                                     return "Please enter reason";
@@ -239,7 +246,9 @@ class LeaveView extends GetWidget<LeaveController> {
                                                           IconButton(
                                                             onPressed: () {
                                                               _asyncConfirmDialog(
-                                                                  context, i);
+                                                                  context,
+                                                                  i,
+                                                                  controller);
                                                             },
                                                             icon: Icon(
                                                               Icons.delete,
@@ -252,6 +261,9 @@ class LeaveView extends GetWidget<LeaveController> {
                                                   ),
                                                   Space.height(5),
                                                   Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Text(
                                                         "Reason : ",
@@ -264,17 +276,19 @@ class LeaveView extends GetWidget<LeaveController> {
                                                         ),
                                                       ),
                                                       Space.width(10),
-                                                      Text(
-                                                        controller
-                                                            .attandanceList[i]
-                                                            .reason
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize:
-                                                              MySize.size16,
+                                                      Expanded(
+                                                        child: Text(
+                                                          controller
+                                                              .attandanceList[i]
+                                                              .reason
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize:
+                                                                MySize.size16,
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
@@ -384,7 +398,7 @@ class LeaveView extends GetWidget<LeaveController> {
         });
   }
 
-  _asyncConfirmDialog(BuildContext context, int index) async {
+  _asyncConfirmDialog(BuildContext context, int index, controller) async {
     return showDialog(
       context: context,
       barrierDismissible: false, // user must tap button for close dialog!
