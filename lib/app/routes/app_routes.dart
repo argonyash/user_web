@@ -11,6 +11,7 @@ abstract class Routes {
   static const LEAVE = _Paths.LEAVE;
   static const ATTANDANCE_NEW = _Paths.ATTANDANCE_NEW;
   static const HOME_MAIN = _Paths.HOME_MAIN;
+  static const DUMMY = _Paths.DUMMY;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const LEAVE = '/leave';
   static const ATTANDANCE_NEW = '/attandance-new';
   static const HOME_MAIN = '/home-main';
+  static const DUMMY = '/dummy';
 }

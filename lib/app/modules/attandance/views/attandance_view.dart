@@ -435,7 +435,14 @@ List<Meeting> _getDataSource(AttandanceController controller) {
     //   }
     // });
   });
-
+  controller.allHolidayList.forEach((element) {
+    meetings.add(Meeting(
+        element.des.toString(),
+        getDateFromString(element.date1!, formatter: 'yyyy-MM-dd'),
+        getDateFromString(element.date2!, formatter: 'yyyy-MM-dd'),
+        const Color(0xFF0F8644),
+        true));
+  });
   // meetings.add(
   //     Meeting('Conference', startTime, endTime, const Color(0xFF0F8644), true));
   // meetings.add(Meeting(

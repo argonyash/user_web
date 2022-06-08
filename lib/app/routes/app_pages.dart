@@ -7,6 +7,8 @@ import '../modules/attandance/bindings/attandance_binding.dart';
 import '../modules/attandance/views/attandance_view.dart';
 import '../modules/attandance_new/bindings/attandance_new_binding.dart';
 import '../modules/attandance_new/views/attandance_new_view.dart';
+import '../modules/dummy/bindings/dummy_binding.dart';
+import '../modules/dummy/views/dummy_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/home_drawer/bindings/home_drawer_binding.dart';
@@ -70,6 +72,11 @@ class AppPages {
       name: _Paths.HOME_MAIN,
       page: () => HomeMainView(),
       binding: HomeMainBinding(),
+    ),
+    GetPage(
+      name: _Paths.DUMMY,
+      page: () => const DummyView(),
+      binding: DummyBinding(),
     ),
   ];
 }

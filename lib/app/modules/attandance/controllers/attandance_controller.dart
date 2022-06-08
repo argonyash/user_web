@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:argon_user/Constants/string_constants.dart';
+import 'package:argon_user/Models/holidayDataModel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData;
@@ -11,8 +12,10 @@ import '../../../../Constants/sizeConstant.dart';
 import '../../../../Models/AttandanceLIstModel.dart';
 import '../../../../Models/DateWiseDataModel.dart';
 import '../../../../Utilities/customeDialogs.dart';
+import '../../../../Utilities/utility_functions.dart';
 import '../../../../main.dart';
 import '../../../data/network_client.dart';
+import '../views/attandance_view.dart';
 
 class AttandanceController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -28,18 +31,22 @@ class AttandanceController extends GetxController {
   RxList<AttendanceDetailsModel> attandanceList =
       RxList<AttendanceDetailsModel>([]);
   RxList<Attandance> leaveList = RxList<Attandance>([]);
+  RxList<HolidayData> allHolidayList = RxList<HolidayData>([]);
   List<String> columnData = ["Date", "Total Time"];
   List<String> columnDataForDay = ["Status", "Time"];
   RxString selectedDate = "".obs;
   ScrollControllers? scrollController = ScrollControllers();
   ScrollControllers? scrollController1 = ScrollControllers();
   RxList<AttendanceDetail> getDataOfDay = RxList<AttendanceDetail>([]);
+  final List<Meeting> meetings = <Meeting>[];
+
   @override
   void onInit() {
     getLastDateOfMonth(now.value);
     // end = getLastDateOfMonth(now.value);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
+      callApiForGetHolidays(context: Get.context!, isFromButton: true);
     });
     super.onInit();
   }
@@ -82,11 +89,11 @@ class AttandanceController extends GetxController {
     // dict["email"] = "ajay01@gmail.com";
 
     // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    dict["date1"] =
-        DateFormat('yyyy-MM-dd').format(DateTime(now.value.year - 1, 01, 01));
+    dict["date1"] = DateFormat('yyyy-MM-dd')
+        .format(DateTime(now.value.year - 1, now.value.month, now.value.day));
     // if (now.value.month != DateTime.now().month) {
-    dict["date2"] = DateFormat('yyyy-MM-dd')
-        .format(getLastDateOfMonth(DateTime(now.value.year, 12)));
+    dict["date2"] = DateFormat('yyyy-MM-dd').format(getLastDateOfMonth(
+        DateTime(now.value.year, now.value.month + 3, now.value.day)));
     // } else {
     //   dict["date2"] = DateFormat('yyyy-MM-dd').format(end.value);
     // }
@@ -201,6 +208,49 @@ class AttandanceController extends GetxController {
         // print(" error");
         //
         // print(status);
+      },
+    );
+  }
+
+  callApiForGetHolidays(
+      {required BuildContext context, bool isFromButton = false}) {
+    FocusScope.of(context).unfocus();
+    if (!isFromButton) {
+      app.resolve<CustomDialogs>().showCircularDialog(context);
+    }
+    Map<String, dynamic> dict = {};
+
+    dict["select_op"] = "get_all_holiday"; //re
+
+    FormData data = FormData.fromMap(dict);
+    print(dict);
+    print(data);
+    //hasData.value = false;
+
+    return NetworkClient.getInstance.callApi(
+      context,
+      baseURL,
+      ApiConstant.holiday,
+      MethodType.Post,
+      headers: NetworkClient.getInstance.getAuthHeaders(),
+      params: data,
+      successCallback: (response, message) {
+        if (!isFromButton) {
+          app.resolve<CustomDialogs>().hideCircularDialog(context);
+        }
+        Map<String, dynamic> m = jsonDecode(response) as Map<String, dynamic>;
+        HolidayDataModel holidayListModel = HolidayDataModel.fromJson(m);
+        if (!isNullEmptyOrFalse(holidayListModel.data)) {
+          List<HolidayData> reverse = [];
+          reverse.addAll(holidayListModel.data!);
+          allHolidayList.addAll(reverse.reversed.toList());
+        }
+      },
+      failureCallback: (status, message) {
+        if (!isFromButton) {
+          app.resolve<CustomDialogs>().hideCircularDialog(context);
+        }
+        app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
       },
     );
   }
