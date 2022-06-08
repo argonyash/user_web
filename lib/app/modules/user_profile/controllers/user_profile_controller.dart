@@ -20,7 +20,7 @@ class UserProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       callApiForGetUserDetail(context: Get.context!);
     });
   }

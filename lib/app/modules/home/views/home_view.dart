@@ -32,102 +32,102 @@ class HomeView extends GetWidget<HomeController> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xfff9fbfc),
-                    borderRadius: BorderRadius.only(
-                      // topLeft: Radius.circular(MySize.size12!),
-                      bottomLeft: Radius.circular(MySize.size42!),
-                    ),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MySize.getScaledSizeWidth(30),
-                  ),
-                  height: MySize.getScaledSizeHeight(110),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Dashboard",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: MySize.size32,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image(
-                              image: AssetImage(
-                                "assets/ic_noti.png",
-                              ),
-                              height: MySize.size32,
-                              width: MySize.size32,
-                            ),
-                            Space.width(20),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                MySize.size100!,
-                              ),
-                              child: (!isNullEmptyOrFalse(
-                                      box.read(StringConstants.userImage)))
-                                  ? CircleAvatar(
-                                      radius: MySize.size30,
-                                      child: CommonNetworkImageView(
-                                        url: imageURL +
-                                            box
-                                                .read(StringConstants.userImage)
-                                                .toString(),
-                                        fit: BoxFit.fill,
-                                      ),
-                                    )
-                                  : CircleAvatar(
-                                      radius: MySize.size30,
-                                      child: CommonNetworkImageView(
-                                        url: "",
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                            ),
-                            Space.width(12),
-                            InkWell(
-                              onTap: () {
-                                Get.offAllNamed(Routes.LOGIN);
-                                box.write(StringConstants.isUserLogIn, false);
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    box.read(StringConstants.userName),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: MySize.size18,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Space.height(8),
-                                  Text(
-                                    box.read(StringConstants.role),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: MySize.size14,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //     color: Color(0xfff9fbfc),
+                //     borderRadius: BorderRadius.only(
+                //       // topLeft: Radius.circular(MySize.size12!),
+                //       bottomLeft: Radius.circular(MySize.size42!),
+                //     ),
+                //   ),
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: MySize.getScaledSizeWidth(30),
+                //   ),
+                //   height: MySize.getScaledSizeHeight(110),
+                //   child: Center(
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       children: [
+                //         Text(
+                //           "Dashboard",
+                //           style: TextStyle(
+                //             color: Colors.black,
+                //             fontSize: MySize.size32,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //         Row(
+                //           crossAxisAlignment: CrossAxisAlignment.center,
+                //           children: [
+                //             Image(
+                //               image: AssetImage(
+                //                 "assets/ic_noti.png",
+                //               ),
+                //               height: MySize.size32,
+                //               width: MySize.size32,
+                //             ),
+                //             Space.width(20),
+                //             ClipRRect(
+                //               borderRadius: BorderRadius.circular(
+                //                 MySize.size100!,
+                //               ),
+                //               child: (!isNullEmptyOrFalse(
+                //                       box.read(StringConstants.userImage)))
+                //                   ? CircleAvatar(
+                //                       radius: MySize.size30,
+                //                       child: CommonNetworkImageView(
+                //                         url: imageURL +
+                //                             box
+                //                                 .read(StringConstants.userImage)
+                //                                 .toString(),
+                //                         fit: BoxFit.fill,
+                //                       ),
+                //                     )
+                //                   : CircleAvatar(
+                //                       radius: MySize.size30,
+                //                       child: CommonNetworkImageView(
+                //                         url: "",
+                //                         fit: BoxFit.fill,
+                //                       ),
+                //                     ),
+                //             ),
+                //             Space.width(12),
+                //             InkWell(
+                //               onTap: () {
+                //                 Get.offAllNamed(Routes.LOGIN);
+                //                 box.write(StringConstants.isUserLogIn, false);
+                //               },
+                //               child: Column(
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 children: [
+                //                   Text(
+                //                     box.read(StringConstants.userName),
+                //                     style: TextStyle(
+                //                       fontWeight: FontWeight.bold,
+                //                       fontSize: MySize.size18,
+                //                       color: Colors.black,
+                //                     ),
+                //                   ),
+                //                   Space.height(8),
+                //                   Text(
+                //                     box.read(StringConstants.role),
+                //                     style: TextStyle(
+                //                       fontWeight: FontWeight.w400,
+                //                       fontSize: MySize.size14,
+                //                       color: Colors.black,
+                //                     ),
+                //                   ),
+                //                 ],
+                //               ),
+                //             )
+                //           ],
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 Container(
                   width: MySize.getScaledSizeWidth(350),
                   padding: EdgeInsets.symmetric(

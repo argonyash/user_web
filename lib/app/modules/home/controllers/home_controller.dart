@@ -92,7 +92,7 @@ class HomeController extends GetxController {
       params: data,
       successCallback: (response, message) {
         app.resolve<CustomDialogs>().hideCircularDialog(context);
-        print(response);
+        // print(response);
 
         callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
         if (response["status"] == "1") {
@@ -109,10 +109,10 @@ class HomeController extends GetxController {
       failureCallback: (status, message) {
         app.resolve<CustomDialogs>().hideCircularDialog(context);
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-
-        print(" error");
-
-        print(status);
+        //
+        // print(" error");
+        //
+        // print(status);
       },
     );
   }
@@ -138,7 +138,7 @@ class HomeController extends GetxController {
     final reduceSecondsBy = 1;
 
     final seconds = myDuration!.inSeconds + reduceSecondsBy;
-    print(myDuration!.inSeconds + reduceSecondsBy);
+    // print(myDuration!.inSeconds + reduceSecondsBy);
     totalSecond = (myDuration!.inSeconds + reduceSecondsBy);
 
     // print(seconds.toString() + "dsdsdsdsd");

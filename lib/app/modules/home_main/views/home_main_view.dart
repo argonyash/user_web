@@ -5,12 +5,17 @@ import 'package:argon_user/app/modules/leave/views/leave_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
+import '../../../../Constants/api_constants.dart';
 import '../../../../Constants/sizeConstant.dart';
+import '../../../../Constants/string_constants.dart';
+import '../../../../Utilities/utility_functions.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/home_main_controller.dart';
 
 class HomeMainView extends GetWidget<HomeMainController> {
+  GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
     MySize().init(context);
@@ -140,9 +145,9 @@ class HomeMainView extends GetWidget<HomeMainController> {
                       onTap: () {
                         // if (Get.currentRoute != Routes.ATTANDANCE) {
                         //Get.offAllNamed(Routes.ATTANDANCE);
-                        print("atatn");
+                        // print("atatn");
                         controller.currentWidget = AttandanceView();
-                        print("atatn");
+                        // print("atatn");
                         controller.count.value++;
                         controller.index.value = 1;
 
@@ -286,7 +291,116 @@ class HomeMainView extends GetWidget<HomeMainController> {
                 ),
               ),
               Space.width(30),
-              if (controller.count.value >= 0) controller.currentWidget!
+              Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xfff9fbfc),
+                        borderRadius: BorderRadius.only(
+                          // topLeft: Radius.circular(MySize.size12!),
+                          bottomLeft: Radius.circular(MySize.size42!),
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: MySize.getScaledSizeWidth(30),
+                      ),
+                      height: MySize.getScaledSizeHeight(110),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              (controller.index.value == 0)
+                                  ? "Dashboard"
+                                  : ((controller.index.value == 1)
+                                      ? "Attandance"
+                                      : "Leave"),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: MySize.size32,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image(
+                                  image: AssetImage(
+                                    "assets/ic_noti.png",
+                                  ),
+                                  height: MySize.size32,
+                                  width: MySize.size32,
+                                ),
+                                Space.width(20),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                    MySize.size100!,
+                                  ),
+                                  child: (!isNullEmptyOrFalse(
+                                          box.read(StringConstants.userImage)))
+                                      ? CircleAvatar(
+                                          radius: MySize.size30,
+                                          child: CommonNetworkImageView(
+                                            url: imageURL +
+                                                box
+                                                    .read(StringConstants
+                                                        .userImage)
+                                                    .toString(),
+                                            fit: BoxFit.fill,
+                                          ),
+                                        )
+                                      : CircleAvatar(
+                                          radius: MySize.size30,
+                                          child: CommonNetworkImageView(
+                                            url: "",
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                ),
+                                Space.width(12),
+                                InkWell(
+                                  onTap: () {
+                                    Get.offAllNamed(Routes.LOGIN);
+                                    box.write(
+                                        StringConstants.isUserLogIn, false);
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        box.read(StringConstants.userName),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: MySize.size18,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Space.height(8),
+                                      Text(
+                                        box.read(StringConstants.role),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: MySize.size14,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (controller.count.value >= 0) controller.currentWidget!
+                  ],
+                ),
+              ),
             ],
           ),
         );

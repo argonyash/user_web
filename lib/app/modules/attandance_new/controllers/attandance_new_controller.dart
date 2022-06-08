@@ -32,7 +32,7 @@ class AttandanceNewController extends GetxController {
   @override
   void onInit() {
     getLastDateOfMonth(now.value);
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
     });
     super.onInit();
@@ -76,14 +76,15 @@ class AttandanceNewController extends GetxController {
     // dict["email"] = "ajay01@gmail.com";
 
     // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    dict["date1"] = DateFormat('yyyy-MM-dd')
-        .format(DateTime(now.value.year, now.value.month, 1));
-    if (now.value.month != DateTime.now().month) {
-      dict["date2"] =
-          DateFormat('yyyy-MM-dd').format(getLastDateOfMonth(now.value));
-    } else {
-      dict["date2"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    }
+    // dict["date1"] = DateFormat('yyyy-MM-dd')
+    //     .format(DateTime((now.value.year - 1), now.value.month, 1));
+    // dict["date1"] = "2021-01-01";
+    // // if (now.value.month != DateTime.now().month) {
+    // dict["date2"] = DateFormat('yyyy-MM-dd')
+    //     .format(getLastDateOfMonth(now.value.add(Duration(days: 365))));
+    // } else {
+    //   dict["date2"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    // }
     // dict["date2"] =
     //     DateFormat('yyyy-MM-dd').format(getLastDateOfMonth(now.value));
     // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());

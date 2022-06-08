@@ -18,6 +18,8 @@ dependencies:
   syncfusion_flutter_datepicker:
   month_year_picker:
   connectivity:
+  syncfusion_flutter_calendar:
+  table_calendar:
   kiwi:
   logging:
   shared_preferences:
@@ -31,6 +33,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   json_serializable: ^6.1.5
   kiwi_generator:
+
   flutter_test:
     sdk: flutter
 

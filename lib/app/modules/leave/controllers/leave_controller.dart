@@ -28,7 +28,7 @@ class LeaveController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       callApiForGetLeave(context: Get.context!, isFromButton: true);
     });
   }
@@ -71,7 +71,7 @@ class LeaveController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        print(response);
+        // print(response);
         reasonController.value.clear();
         if (!isFromButton) {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
@@ -80,7 +80,7 @@ class LeaveController extends GetxController {
 
         // List data = jsonDecode(response) as List;
 
-        print(response);
+        // print(response);
       },
       failureCallback: (status, message) {
         if (!isFromButton) {
@@ -88,9 +88,9 @@ class LeaveController extends GetxController {
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
 
-        print(" error");
-
-        print(status);
+        // print(" error");
+        //
+        // print(status);
       },
     );
   }
@@ -119,7 +119,7 @@ class LeaveController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        print(response);
+        // print(response);
         hasData.value = true;
 
         if (!isFromButton) {
@@ -136,11 +136,11 @@ class LeaveController extends GetxController {
           //attandanceList.addAll(attandanceListModel.data!);
           attandanceList.addAll(reverse.reversed.toList());
 
-          print(attandanceList.length.toString() + "asa");
+          //print(attandanceList.length.toString() + "asa");
         }
         //List data = jsonDecode(response) as List;
 
-        print(response);
+        //   print(response);
       },
       failureCallback: (status, message) {
         hasData.value = true;
