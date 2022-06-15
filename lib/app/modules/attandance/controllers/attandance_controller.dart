@@ -43,7 +43,7 @@ class AttandanceController extends GetxController {
   @override
   void onInit() {
     getLastDateOfMonth(now.value);
-    // end = getLastDateOfMonth(now.value);
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
       callApiForGetHolidays(context: Get.context!, isFromButton: true);
@@ -59,14 +59,13 @@ class AttandanceController extends GetxController {
   getLastDateOfMonth(DateTime now) {
     DateTime lastDayOfMonth = new DateTime(now.year, now.month + 1, 0);
     DateTime fDayOfMonth = new DateTime(now.year, now.month, 1);
-    // print("${lastDayOfMonth.month}/${lastDayOfMonth.day}");
-    // print("${fDayOfMonth.month}/${fDayOfMonth.day}");
+
     return lastDayOfMonth;
   }
 
   getTotalTime(int sec) {
     Duration diff = Duration(seconds: sec);
-    // totalSecond = int.parse(checkInOutModel.data!.total.toString());
+
     String h = strDigits(diff.inHours.remainder(24));
     String mm = strDigits(diff.inMinutes.remainder(60));
     String ss = strDigits(diff.inSeconds.remainder(60));
@@ -84,27 +83,17 @@ class AttandanceController extends GetxController {
       app.resolve<CustomDialogs>().showCircularDialog(context);
     }
     Map<String, dynamic> dict = {};
-    //hasData.value = false;
-    dict["email"] = box.read(StringConstants.userEmailAddress);
-    // dict["email"] = "ajay01@gmail.com";
 
-    // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    dict["email"] = box.read(StringConstants.userEmailAddress);
+
     dict["date1"] = DateFormat('yyyy-MM-dd')
         .format(DateTime(now.value.year - 1, now.value.month, now.value.day));
-    // if (now.value.month != DateTime.now().month) {
+
     dict["date2"] = DateFormat('yyyy-MM-dd').format(getLastDateOfMonth(
         DateTime(now.value.year, now.value.month + 3, now.value.day)));
-    // } else {
-    //   dict["date2"] = DateFormat('yyyy-MM-dd').format(end.value);
-    // }
-    // dict["date2"] =
-    //     DateFormat('yyyy-MM-dd').format(getLastDateOfMonth(now.value));
-    // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
-    //hasData.value = false;
+
     return NetworkClient.getInstance.callApi(
       context,
       baseURL,
@@ -127,14 +116,6 @@ class AttandanceController extends GetxController {
           getDataOfDay.addAll(attandanceList.last.data!);
         }
         callApiForGetLeave(context: context, isFromButton: true);
-
-        // attandanceList.first.data!.forEach((element) {
-        //   getDataOfDay.value.add(element);
-        // });
-
-        // print(attandanceList);
-
-        // print(response);
       },
       failureCallback: (status, message) {
         hasData.value = true;
@@ -143,10 +124,6 @@ class AttandanceController extends GetxController {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-
-        print(" error");
-
-        // print(status);
       },
     );
   }
@@ -163,8 +140,7 @@ class AttandanceController extends GetxController {
     dict["select_op"] = "get_all_leave"; //re
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
+
     hasData.value = false;
 
     return NetworkClient.getInstance.callApi(
@@ -175,7 +151,6 @@ class AttandanceController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        // print(response);
         hasData.value = true;
 
         if (!isFromButton) {
@@ -185,17 +160,11 @@ class AttandanceController extends GetxController {
         GetAttandanceListModel attandanceListModel =
             GetAttandanceListModel.fromJson(m);
         if (!isNullEmptyOrFalse(attandanceListModel.data)) {
-          // print
           List<Attandance> reverse = [];
           reverse.addAll(attandanceListModel.data!);
-          //attandanceList.addAll(attandanceListModel.data!);
+
           leaveList.addAll(reverse.reversed.toList());
-
-          // print(attandanceList.length.toString() + "asa");
         }
-        //List data = jsonDecode(response) as List;
-
-        // print(response);
       },
       failureCallback: (status, message) {
         hasData.value = true;
@@ -204,10 +173,6 @@ class AttandanceController extends GetxController {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-        //
-        // print(" error");
-        //
-        // print(status);
       },
     );
   }
@@ -223,9 +188,6 @@ class AttandanceController extends GetxController {
     dict["select_op"] = "get_all_holiday"; //re
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
-    //hasData.value = false;
 
     return NetworkClient.getInstance.callApi(
       context,

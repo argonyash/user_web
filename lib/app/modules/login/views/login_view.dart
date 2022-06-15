@@ -19,11 +19,6 @@ class LoginView extends GetWidget<LoginController> {
   Widget build(BuildContext context) {
     MySize().init(context);
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Login'),
-      //   centerTitle: true,
-      //   backgroundColor: appTheme.primaryTheme,
-      // ),
       body: ResponsiveWidget(
         largeScreen: Container(
           height: MySize.screenHeight,
@@ -32,22 +27,6 @@ class LoginView extends GetWidget<LoginController> {
             key: controller.formKey,
             child: Stack(
               children: [
-                // Container(
-                //   height: MySize.screenHeight,
-                //   width: MySize.screenWidth,
-                //   child: Column(
-                //     children: [
-                //       Expanded(
-                //         child: Container(),
-                //       ),
-                //       Expanded(
-                //         child: Container(
-                //           color: Colors.blue,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 Container(
                   height: MySize.screenHeight,
                   width: MySize.screenWidth,
@@ -226,21 +205,11 @@ class LoginView extends GetWidget<LoginController> {
                                           StringConstants.userEmailAddress,
                                           controller
                                               .emailController.value.text);
-                                      print(box.read(
-                                          StringConstants.userEmailAddress));
+
                                       controller.callApiForLoginUser(
                                           context: context);
                                     }
                                   },
-                                  // child: button(
-                                  //   backgroundColor: Colors.blue,
-                                  //   textColor: appTheme.whiteColor,
-                                  //   fontsize: MySize.size23,
-                                  //   radius: MySize.size20!,
-                                  //   width: MySize.getScaledSizeWidth(220),
-                                  //   fontWeight: FontWeight.w500,
-                                  //   title: "LOG IN",
-                                  // ),
                                   child: Image(
                                     image: AssetImage("assets/log_in.png"),
                                     height: MySize.getScaledSizeHeight(130),

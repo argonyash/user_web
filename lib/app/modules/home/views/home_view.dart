@@ -19,8 +19,9 @@ import '../controllers/home_controller.dart';
 class HomeView extends GetWidget<HomeController> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     MySize().init(context);
+    final textTheme = Theme.of(context).textTheme;
+
     return GetBuilder<HomeController>(
       assignId: true,
       init: HomeController(),

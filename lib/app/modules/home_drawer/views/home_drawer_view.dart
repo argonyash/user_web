@@ -29,7 +29,7 @@ class HomeDrawerView extends GetWidget<HomeDrawerController> {
                     title: Text("Home"),
                     onTap: () {
                       Get.back();
-                      print(Get.currentRoute);
+
                       if (Get.currentRoute != Routes.HOME) {
                         Get.offAllNamed(Routes.HOME);
                       }
@@ -40,7 +40,7 @@ class HomeDrawerView extends GetWidget<HomeDrawerController> {
                     title: Text("Attandance"),
                     onTap: () {
                       Get.back();
-                      print(Get.currentRoute);
+
                       if (Get.currentRoute != Routes.ATTANDANCE) {
                         Get.offAllNamed(Routes.ATTANDANCE);
                       }
@@ -51,7 +51,7 @@ class HomeDrawerView extends GetWidget<HomeDrawerController> {
                     title: Text("Profile"),
                     onTap: () {
                       Get.back();
-                      print(Get.currentRoute);
+
                       if (Get.currentRoute != Routes.USER_PROFILE) {
                         Get.offAllNamed(Routes.USER_PROFILE);
                       }
@@ -62,7 +62,7 @@ class HomeDrawerView extends GetWidget<HomeDrawerController> {
                     title: Text("Leave"),
                     onTap: () {
                       Get.back();
-                      print(Get.currentRoute);
+
                       if (Get.currentRoute != Routes.LEAVE) {
                         Get.offAllNamed(Routes.LEAVE);
                       }

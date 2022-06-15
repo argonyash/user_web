@@ -29,7 +29,7 @@ class AppPages {
 
   static String INITIAL =
       (!isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn)))
-          ? Routes.HOME
+          ? Routes.HOME_MAIN
           : Routes.LOGIN;
 
   static final routes = [

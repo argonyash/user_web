@@ -23,8 +23,9 @@ class LeaveController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxList<Attandance> attandanceList = RxList<Attandance>([]);
   RxBool hasData = false.obs;
+  RxBool applyLeave = false.obs;
 
-  final count = 0.obs;
+  final count = 1.obs;
   @override
   void onInit() {
     super.onInit();
@@ -55,12 +56,11 @@ class LeaveController extends GetxController {
     } else {
       dict["date2"] = DateFormat('yyyy-MM-dd').format(range.value.startDate!);
     }
-    print(box.read(StringConstants.userName));
+
     dict["name"] = box.read(StringConstants.userName);
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
+
     //hasData.value = false;
 
     return NetworkClient.getInstance.callApi(
@@ -71,26 +71,17 @@ class LeaveController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        // print(response);
         reasonController.value.clear();
         if (!isFromButton) {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
         callApiForGetLeave(context: Get.context!, isFromButton: true);
-
-        // List data = jsonDecode(response) as List;
-
-        // print(response);
       },
       failureCallback: (status, message) {
         if (!isFromButton) {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-
-        // print(" error");
-        //
-        // print(status);
       },
     );
   }
@@ -107,8 +98,7 @@ class LeaveController extends GetxController {
     dict["select_op"] = "get_all_leave"; //re
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
+
     hasData.value = false;
 
     return NetworkClient.getInstance.callApi(
@@ -119,7 +109,6 @@ class LeaveController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        // print(response);
         hasData.value = true;
 
         if (!isFromButton) {
@@ -128,19 +117,13 @@ class LeaveController extends GetxController {
         Map<String, dynamic> m = jsonDecode(response) as Map<String, dynamic>;
         GetAttandanceListModel attandanceListModel =
             GetAttandanceListModel.fromJson(m);
+        attandanceList.clear();
         if (!isNullEmptyOrFalse(attandanceListModel.data)) {
-          attandanceList.clear();
-          // print
           List<Attandance> reverse = [];
           reverse.addAll(attandanceListModel.data!);
-          //attandanceList.addAll(attandanceListModel.data!);
+
           attandanceList.addAll(reverse.reversed.toList());
-
-          //print(attandanceList.length.toString() + "asa");
         }
-        //List data = jsonDecode(response) as List;
-
-        //   print(response);
       },
       failureCallback: (status, message) {
         hasData.value = true;
@@ -149,10 +132,6 @@ class LeaveController extends GetxController {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-
-        print(" error");
-
-        print(status);
       },
     );
   }
@@ -168,8 +147,8 @@ class LeaveController extends GetxController {
     }
     Map<String, dynamic> dict = {};
 
-    dict["email"] = box.read(StringConstants.userEmailAddress);
-    dict["name"] = box.read(StringConstants.userName);
+    // dict["email"] = box.read(StringConstants.userEmailAddress);
+    // dict["name"] = box.read(StringConstants.userName);
     dict["select_op"] = "delete_leave";
     dict["id"] = id!;
     // dict["date_from"] = DateFormat('yyyy-MM-dd').format(range.startDate!);
@@ -178,8 +157,7 @@ class LeaveController extends GetxController {
     // }
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
+
     hasData.value = false;
 
     return NetworkClient.getInstance.callApi(
@@ -190,7 +168,6 @@ class LeaveController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        print(response);
         hasData.value = true;
 
         if (!isFromButton) {
@@ -200,8 +177,6 @@ class LeaveController extends GetxController {
         callApiForGetLeave(context: Get.context!, isFromButton: true);
 
         //List data = jsonDecode(response) as List;
-
-        print(response);
       },
       failureCallback: (status, message) {
         hasData.value = true;
@@ -210,10 +185,6 @@ class LeaveController extends GetxController {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-
-        print(" error");
-
-        print(status);
       },
     );
   }

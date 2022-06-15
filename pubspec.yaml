@@ -14,10 +14,11 @@ dependencies:
   flutter_svg:
   ntp: ^2.0.0
   get_storage:
+  grouped_list: ^5.1.1
   table_sticky_headers:
   syncfusion_flutter_datepicker:
   month_year_picker:
-  connectivity:
+  connectivity_plus:
   syncfusion_flutter_calendar:
   table_calendar:
   kiwi:

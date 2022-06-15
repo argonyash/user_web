@@ -2,6 +2,7 @@ import 'package:argon_user/app/modules/attandance/views/attandance_view.dart';
 import 'package:argon_user/app/modules/attandance_new/views/attandance_new_view.dart';
 import 'package:argon_user/app/modules/home/views/home_view.dart';
 import 'package:argon_user/app/modules/leave/views/leave_view.dart';
+import 'package:argon_user/app/modules/user_profile/views/user_profile_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -143,11 +144,8 @@ class HomeMainView extends GetWidget<HomeMainController> {
                     Space.height(10),
                     InkWell(
                       onTap: () {
-                        // if (Get.currentRoute != Routes.ATTANDANCE) {
-                        //Get.offAllNamed(Routes.ATTANDANCE);
-                        // print("atatn");
                         controller.currentWidget = AttandanceView();
-                        // print("atatn");
+
                         controller.count.value++;
                         controller.index.value = 1;
 
@@ -175,7 +173,7 @@ class HomeMainView extends GetWidget<HomeMainController> {
                                     ),
                                     Space.width(12),
                                     Text(
-                                      "Attandance",
+                                      "Attendance",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: MySize.size20,
@@ -315,8 +313,10 @@ class HomeMainView extends GetWidget<HomeMainController> {
                               (controller.index.value == 0)
                                   ? "Dashboard"
                                   : ((controller.index.value == 1)
-                                      ? "Attandance"
-                                      : "Leave"),
+                                      ? "Attendance"
+                                      : (controller.index.value == 2)
+                                          ? "Leave"
+                                          : "My Profile"),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: MySize.size32,
@@ -362,9 +362,12 @@ class HomeMainView extends GetWidget<HomeMainController> {
                                 Space.width(12),
                                 InkWell(
                                   onTap: () {
-                                    Get.offAllNamed(Routes.LOGIN);
-                                    box.write(
-                                        StringConstants.isUserLogIn, false);
+                                    // Get.offAllNamed(Routes.LOGIN);
+                                    // box.write(
+                                    //     StringConstants.isUserLogIn, false);
+                                    controller.currentWidget =
+                                        UserProfileView();
+                                    controller.index.value = 5;
                                   },
                                   child: Column(
                                     crossAxisAlignment:
@@ -397,7 +400,14 @@ class HomeMainView extends GetWidget<HomeMainController> {
                         ),
                       ),
                     ),
-                    if (controller.count.value >= 0) controller.currentWidget!
+                    if (controller.count.value >= 0)
+                      (controller.index.value == 0)
+                          ? HomeView()
+                          : ((controller.index.value == 1)
+                              ? AttandanceView()
+                              : (controller.index.value == 2)
+                                  ? LeaveView()
+                                  : UserProfileView())
                   ],
                 ),
               ),

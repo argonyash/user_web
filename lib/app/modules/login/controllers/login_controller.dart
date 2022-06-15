@@ -74,15 +74,10 @@ class LoginController extends GetxController {
               .resolve<CustomDialogs>()
               .getDialog(title: "Failed", desc: "Enter valid password");
         }
-        print(response);
       },
       failureCallback: (status, message) {
         app.resolve<CustomDialogs>().hideCircularDialog(context);
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-
-        print(" error");
-
-        print(status);
       },
     );
   }

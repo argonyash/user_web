@@ -1,5 +1,6 @@
 import 'package:argon_user/Constants/sizeConstant.dart';
 import 'package:argon_user/Utilities/utility_functions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide TableCell;
 
 import 'package:get/get.dart';
@@ -34,9 +35,6 @@ class AttandanceView extends GetWidget<AttandanceController> {
                       child: SfCalendar(
                         view: CalendarView.month,
                         allowViewNavigation: false,
-
-                        //key: UniqueKey(),
-
                         monthViewSettings: MonthViewSettings(
                             appointmentDisplayMode:
                                 MonthAppointmentDisplayMode.appointment),
@@ -46,6 +44,7 @@ class AttandanceView extends GetWidget<AttandanceController> {
 
                         // initialDisplayDate: DateTime.now(),
                         showNavigationArrow: true,
+
                         //initialSelectedDate: DateTime.now(),
                         allowAppointmentResize: true,
 
@@ -53,24 +52,22 @@ class AttandanceView extends GetWidget<AttandanceController> {
                           fontSize: MySize.size20,
                           color: Colors.white,
                         ),
-                        // onViewChanged: (val) {
-                        //   print(val.visibleDates);
-                        //
-                        //   print(controller.hasFirstTime.value);
-                        //   if (!controller.hasFirstTime.value) {
-                        //     print("eeeeeeeeeee");
-                        //
-                        //     controller.selected = val.visibleDates.first;
-                        //     controller.now.value = val.visibleDates.first;
-                        //     controller.end.value = val.visibleDates.last;
-                        //     print(controller.now.value);
-                        //     controller.callApiForGetTodayEntry(
-                        //         context: context, isFromButton: true);
-                        //   } else {
-                        //     controller.hasFirstTime.value = false;
-                        //   }
-                        // },
+
+                        scheduleViewSettings: ScheduleViewSettings(
+                          appointmentItemHeight: 500,
+                        ),
                         appointmentBuilder: appointmentBuilder,
+                        allowedViews: <CalendarView>[
+                          //CalendarView.day,
+                          // CalendarView.workWeek,
+                          // CalendarView.week,
+                          CalendarView.month,
+                          // CalendarView.timelineDay,
+                          // CalendarView.timelineWeek,
+                          // CalendarView.timelineWorkWeek,
+                          // CalendarView.timelineMonth,
+                          CalendarView.schedule
+                        ],
                         headerStyle: CalendarHeaderStyle(
                           textAlign: TextAlign.center,
                         ),
@@ -103,179 +100,7 @@ class AttandanceView extends GetWidget<AttandanceController> {
                   //   )
                   : Center(
                       child: CircularProgressIndicator(),
-                    )
-
-              // child: Column(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: [
-              //     FlatButton(
-              //       onPressed: () async {
-              //         DateTime? selected = await showMonthYearPicker(
-              //           context: context,
-              //           initialDate: DateTime.now(),
-              //           firstDate: DateTime(2019),
-              //           lastDate: DateTime(
-              //             DateTime.now().year,
-              //             DateTime.now().month,
-              //           ),
-              //         );
-              //
-              //         if (selected != null) {
-              //           controller.selected = selected;
-              //           controller.now.value = selected;
-              //           controller.callApiForGetTodayEntry(
-              //               context: context, isFromButton: true);
-              //         }
-              //
-              //         // print(selected);
-              //       },
-              //       color: Colors.blue,
-              //       child: const Text(
-              //         "Select Month",
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //     ),
-              //     Padding(
-              //       padding: EdgeInsets.only(
-              //         top: MySize.getScaledSizeHeight(10),
-              //         bottom: MySize.getScaledSizeHeight(10),
-              //       ),
-              //       child: Text((controller.now.value.month ==
-              //               DateTime.now().month)
-              //           ? "This Month"
-              //           : DateFormat('MMM, yyyy').format(controller.now.value)),
-              //     ),
-              //     Expanded(
-              //       child: Row(
-              //         children: [
-              //           (controller.hasData.value)
-              //               ? ((!isNullEmptyOrFalse(controller.attandanceList))
-              //                   ? Container(
-              //                       width: MySize.getScaledSizeWidth(600),
-              //                       child: StickyHeadersTable(
-              //                         rowsLength:
-              //                             controller.attandanceList.length,
-              //                         columnsLength: controller.columnData.length,
-              //                         columnsTitleBuilder: (i) =>
-              //                             TableCell.stickyRow(
-              //                           controller.columnData[i],
-              //                           textStyle: textTheme.button!
-              //                               .copyWith(fontSize: 15.0),
-              //                         ),
-              //                         rowsTitleBuilder: (i) =>
-              //                             TableCell.stickyColumn(
-              //                           "${i + 1}",
-              //                           textStyle: textTheme.button!
-              //                               .copyWith(fontSize: 15.0),
-              //                         ),
-              //                         scrollControllers:
-              //                             controller.scrollController,
-              //                         contentCellBuilder: (i, j) =>
-              //                             TableCell.content(
-              //                           getDataTextForDay(i, j, controller),
-              //                           onTap: () {
-              //                             controller.getDataOfDay.clear();
-              //                             controller.getDataOfDay.addAll(
-              //                                 controller
-              //                                     .attandanceList[controller
-              //                                             .attandanceList.length -
-              //                                         (j + 1)]
-              //                                     .data!);
-              //                             controller.selectedDate.value =
-              //                                 controller
-              //                                     .attandanceList[controller
-              //                                             .attandanceList.length -
-              //                                         (j + 1)]
-              //                                     .date
-              //                                     .toString();
-              //                           },
-              //                           textStyle: textTheme.bodyText2!
-              //                               .copyWith(fontSize: 12.0),
-              //                         ),
-              //                         legendCell: TableCell.legend(
-              //                           'No',
-              //                           textStyle: textTheme.button!
-              //                               .copyWith(fontSize: 16.5),
-              //                         ),
-              //                       ),
-              //                     )
-              //                   : Container(
-              //                       width: MySize.getScaledSizeWidth(600),
-              //                       child: const Center(
-              //                         child: Text("No any entry found."),
-              //                       ),
-              //                     ))
-              //               : Container(
-              //                   width: MySize.getScaledSizeWidth(600),
-              //                   child: const Center(
-              //                     child: CircularProgressIndicator(),
-              //                   ),
-              //                 ),
-              //           Column(
-              //             children: [
-              //               Text(
-              //                 controller.selectedDate.toString(),
-              //                 style: TextStyle(
-              //                   color: Colors.black,
-              //                   fontSize: MySize.size18!,
-              //                   fontWeight: FontWeight.bold,
-              //                 ),
-              //               ),
-              //               Spacing.height(10),
-              //               Expanded(
-              //                   child:
-              //                       (!isNullEmptyOrFalse(controller.getDataOfDay))
-              //                           ? Container(
-              //                               width: MySize.getScaledSizeWidth(300),
-              //                               child: StickyHeadersTable(
-              //                                 rowsLength:
-              //                                     controller.getDataOfDay.length,
-              //                                 columnsLength: controller
-              //                                     .columnDataForDay.length,
-              //                                 columnsTitleBuilder: (i) =>
-              //                                     TableCell.stickyRow(
-              //                                   controller.columnDataForDay[i],
-              //                                   textStyle: textTheme.button!
-              //                                       .copyWith(fontSize: 15.0),
-              //                                 ),
-              //                                 rowsTitleBuilder: (i) =>
-              //                                     TableCell.stickyColumn(
-              //                                   "${i + 1}",
-              //                                   textStyle: textTheme.button!
-              //                                       .copyWith(fontSize: 15.0),
-              //                                 ),
-              //                                 scrollControllers:
-              //                                     controller.scrollController1,
-              //                                 contentCellBuilder: (i, j) =>
-              //                                     TableCell.content(
-              //                                   getDataText(i, j, controller),
-              //                                   textStyle: textTheme.bodyText2!
-              //                                       .copyWith(fontSize: 12.0),
-              //                                 ),
-              //                                 legendCell: TableCell.legend(
-              //                                   'No',
-              //                                   textStyle: textTheme.button!
-              //                                       .copyWith(fontSize: 16.5),
-              //                                 ),
-              //                               ),
-              //                             )
-              //                           : Container(
-              //                               width: MySize.getScaledSizeWidth(300),
-              //                               child: const Center(
-              //                                 child: Text("No any entry found."),
-              //                               ),
-              //                             )),
-              //             ],
-              //           )
-              //         ],
-              //       ),
-              //     )
-              //   ],
-              // ),
-              );
+                    ));
         });
         // });
       },
@@ -287,6 +112,7 @@ class AttandanceView extends GetWidget<AttandanceController> {
   // }
   Widget appointmentBuilder(BuildContext context,
       CalendarAppointmentDetails calendarAppointmentDetails) {
+    // final ins = 1;
     final Meeting appointment = calendarAppointmentDetails.appointments.first;
     return Align(
       alignment: Alignment.bottomCenter,
@@ -367,7 +193,7 @@ List<Meeting> _getDataSource(AttandanceController controller) {
           true));
     }
   });
-  print(meetings);
+
   controller.attandanceList.forEach((element) {
     bool isDateBetween = false;
     meetings.forEach((element2) {
@@ -403,10 +229,9 @@ List<Meeting> _getDataSource(AttandanceController controller) {
             getDateFromString(element.date!, formatter: 'yyyy-MM-dd'),
             getDateFromString(element.date!, formatter: 'yyyy-MM-dd'),
             Colors.teal,
-            true));
+            false));
       }
       if (element.data!.isNotEmpty) {
-        // print("ssasas" + element.data!.first.total.toString());
         if (!isNullEmptyOrFalse(element.data!.last.total)) {
           meetings.add(Meeting(
               controller

@@ -74,6 +74,8 @@ TextFormField getTextFormField(
     double? borderRadius,
     Color? borderColor,
     bool? isFillColor = false,
+    Color? fillColor,
+    TextStyle? hintTextStyle,
     Widget? prefixIcon,
     List<TextInputFormatter>? formator,
     bool isReadOnly = false,
@@ -95,7 +97,9 @@ TextFormField getTextFormField(
     maxLines: maxLine,
     decoration: InputDecoration(
       filled: isFillColor,
-      fillColor: appTheme.borderColor.withOpacity(0.2),
+      fillColor: (fillColor != null)
+          ? fillColor
+          : appTheme.borderColor.withOpacity(0.2),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
             color: (borderColor == null) ? Colors.transparent : borderColor),
@@ -123,9 +127,11 @@ TextFormField getTextFormField(
       suffixIcon: suffixIcon,
       suffix: suffix,
       hintText: hintText,
-      hintStyle: TextStyle(
-        fontSize: MySize.size16!,
-      ),
+      hintStyle: (hintTextStyle != null)
+          ? hintTextStyle
+          : TextStyle(
+              fontSize: MySize.size16!,
+            ),
     ),
   );
 }

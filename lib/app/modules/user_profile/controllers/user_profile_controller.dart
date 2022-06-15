@@ -36,13 +36,9 @@ class UserProfileController extends GetxController {
     FocusScope.of(context).unfocus();
     // app.resolve<CustomDialogs>().showCircularDialog(context);
     Map<String, dynamic> dict = {};
-    // GetStorage box = GetStorage();
-    print(box.read(StringConstants.userEmailAddress));
+
     dict["email"] = box.read(StringConstants.userEmailAddress);
     FormData data = FormData.fromMap(dict);
-    print(dict);
-
-    print(data);
 
     return NetworkClient.getInstance.callApi(
       context,
@@ -52,20 +48,13 @@ class UserProfileController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        print(response);
         hasData.value = true;
         UserProfileModelData userProfile =
             UserProfileModelData.fromJson(response);
         userProfileModel = userProfile.data;
-        print(userProfileModel!.name.toString() + "sasa");
-        print(response);
       },
       failureCallback: (status, message) {
         hasData.value = true;
-
-        print(" error");
-
-        print(status);
       },
     );
   }

@@ -12,7 +12,9 @@ class HomeMainController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    currentWidget = HomeView();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      currentWidget = HomeView();
+    });
   }
 
   @override
