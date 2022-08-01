@@ -199,8 +199,10 @@ class HomeController extends GetxController {
                 checkInOutModel.data!.time.toString(),
                 formatter: 'HH:mm:ss');
             totalSecond = int.parse(checkInOutModel.data!.total.toString());
+            print("now" + now.toString());
 
             Duration diff = DateTime.now().difference(now);
+            print(diff.inSeconds.toString() + "didd");
             //  print(diff.inSeconds.toString() + "adsa");
             myDuration = Duration(
                 seconds: (diff.inSeconds +
@@ -211,6 +213,7 @@ class HomeController extends GetxController {
             DateTime now = getDateFromString(
                 checkInOutModel.data!.time.toString(),
                 formatter: 'HH:mm:ss');
+            print("nowb" + now.toString());
 
             Duration diff = Duration(
                 seconds: int.parse(checkInOutModel.data!.total.toString()));
@@ -304,7 +307,7 @@ class HomeController extends GetxController {
       params: data,
       successCallback: (response, message) {
         hasData.value = true;
-
+        print(response);
         if (!isFromButton) {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
