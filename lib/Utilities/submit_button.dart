@@ -10,6 +10,7 @@ Container button({
   Color? backgroundColor,
   Color? borderColor,
   Color? textColor,
+  double radius = 8,
   Widget? widget,
   FontWeight fontWeight = FontWeight.bold,
   double? fontsize = 14,
@@ -18,7 +19,7 @@ Container button({
     height: MySize.getScaledSizeHeight(height),
     width: MySize.getScaledSizeWidth(width),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(MySize.size6!),
+      borderRadius: BorderRadius.circular(radius),
       border: Border.all(
           color: (borderColor == null) ? Colors.transparent : borderColor,
           width: 1),

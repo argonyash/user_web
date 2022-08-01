@@ -102,7 +102,6 @@ class HomeController extends GetxController {
             callApiForClockInOrOutStatus(
                 context: Get.context!, isFromButton: true);
           }
-          //print(webClockIn.value);
         }
       },
       failureCallback: (status, message) {
@@ -150,10 +149,6 @@ class HomeController extends GetxController {
       hours.value = strDigits(myDuration!.inHours.remainder(24));
       minutes.value = strDigits(myDuration!.inMinutes.remainder(60));
       second.value = strDigits(myDuration!.inSeconds.remainder(60));
-
-      // print(second.value.toString());
-      //  print(minutes.value.toString() + "m");
-      // print(hours.value.toString() + "h");
     }
   }
 
@@ -176,8 +171,6 @@ class HomeController extends GetxController {
     dict["data_st"] = "last_record";
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
 
     return NetworkClient.getInstance.callApi(
       context,
@@ -295,8 +288,6 @@ class HomeController extends GetxController {
     dict["data_st"] = "today_entry";
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
 
     return NetworkClient.getInstance.callApi(
       context,
@@ -312,9 +303,6 @@ class HomeController extends GetxController {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
         clockInOutModel = ClockInOutModel.fromJson(response);
-        print(clockInOutModel!.data);
-
-        print(response);
       },
       failureCallback: (status, message) {
         hasData.value = true;
@@ -323,10 +311,6 @@ class HomeController extends GetxController {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-
-        print(" error");
-
-        print(status);
       },
     );
   }

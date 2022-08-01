@@ -72,7 +72,10 @@ TextFormField getTextFormField(
     Widget? suffixIcon,
     bool textVisible = false,
     double? borderRadius,
+    Color? borderColor,
     bool? isFillColor = false,
+    Color? fillColor,
+    TextStyle? hintTextStyle,
     Widget? prefixIcon,
     List<TextInputFormatter>? formator,
     bool isReadOnly = false,
@@ -85,6 +88,7 @@ TextFormField getTextFormField(
     cursorColor: appTheme.primaryTheme,
     readOnly: isReadOnly,
     obscureText: textVisible,
+    obscuringCharacter: "*",
     enabled: enable,
     inputFormatters: formator,
     validator: validation,
@@ -93,20 +97,26 @@ TextFormField getTextFormField(
     maxLines: maxLine,
     decoration: InputDecoration(
       filled: isFillColor,
-      fillColor: appTheme.fillColor,
+      fillColor: (fillColor != null)
+          ? fillColor
+          : appTheme.borderColor.withOpacity(0.2),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: appTheme.borderColor),
+        borderSide: BorderSide(
+            color: (borderColor == null) ? Colors.transparent : borderColor),
         borderRadius: BorderRadius.circular(
-            (borderRadius == null) ? MySize.size10! : borderRadius),
+            (borderRadius == null) ? MySize.size100! : borderRadius),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
-            (borderRadius == null) ? MySize.size10! : borderRadius),
-        borderSide: BorderSide(color: appTheme.primaryTheme),
+            (borderRadius == null) ? MySize.size100! : borderRadius),
+        borderSide: BorderSide(
+            color: (borderColor == null) ? Colors.transparent : borderColor),
       ),
       border: OutlineInputBorder(
+        borderSide: BorderSide(
+            color: (borderColor == null) ? Colors.transparent : borderColor),
         borderRadius: BorderRadius.circular(
-            (borderRadius == null) ? MySize.size10! : borderRadius),
+            (borderRadius == null) ? MySize.size100! : borderRadius),
       ),
       contentPadding: EdgeInsets.only(
         left: MySize.size20!,
@@ -117,9 +127,11 @@ TextFormField getTextFormField(
       suffixIcon: suffixIcon,
       suffix: suffix,
       hintText: hintText,
-      hintStyle: TextStyle(
-        fontSize: MySize.size16!,
-      ),
+      hintStyle: (hintTextStyle != null)
+          ? hintTextStyle
+          : TextStyle(
+              fontSize: MySize.size16!,
+            ),
     ),
   );
 }

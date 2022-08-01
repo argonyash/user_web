@@ -63,22 +63,21 @@ class LoginController extends GetxController {
           app.resolve<CustomDialogs>().getDialog(
               title: "Failed", desc: "No any account found for this account.");
         } else if (loginModel.status == 2) {
-          Get.offAndToNamed(Routes.HOME);
+          Get.offAndToNamed(Routes.HOME_MAIN);
           box.write(StringConstants.isUserLogIn, true);
+          box.write(StringConstants.userName, loginModel.name.toString());
+          box.write(StringConstants.role, loginModel.role.toString());
+          box.write(StringConstants.role, loginModel.role.toString());
+          box.write(StringConstants.userImage, loginModel.img.toString());
         } else {
           app
               .resolve<CustomDialogs>()
               .getDialog(title: "Failed", desc: "Enter valid password");
         }
-        print(response);
       },
       failureCallback: (status, message) {
         app.resolve<CustomDialogs>().hideCircularDialog(context);
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-
-        print(" error");
-
-        print(status);
       },
     );
   }

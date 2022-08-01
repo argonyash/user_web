@@ -11,12 +11,16 @@ dependencies:
   dio:
   intl:
   cached_network_image:
+  flutter_svg:
   ntp: ^2.0.0
   get_storage:
+  grouped_list: ^5.1.1
   table_sticky_headers:
   syncfusion_flutter_datepicker:
   month_year_picker:
-  connectivity:
+  connectivity_plus:
+  syncfusion_flutter_calendar:
+  table_calendar:
   kiwi:
   logging:
   shared_preferences:
@@ -30,6 +34,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   json_serializable: ^6.1.5
   kiwi_generator:
+
   flutter_test:
     sdk: flutter
 
@@ -39,3 +44,7 @@ flutter:
   assets:
     - assets/
 
+
+#flutter_native_splash:
+#  color: "#ffffff"
+#  image: "assets/logo.png"

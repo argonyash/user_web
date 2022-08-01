@@ -8,5 +8,6 @@ class ApiConstant {
   static const getTime = "get_time.php";
   static const dateWiseData = "user_month_data.php";
   static const leave = "leave.php";
+  static const holiday = "holiday.php";
   static const userData = "user_data.php";
 }

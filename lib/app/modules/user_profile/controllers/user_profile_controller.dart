@@ -20,7 +20,7 @@ class UserProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       callApiForGetUserDetail(context: Get.context!);
     });
   }
@@ -36,13 +36,9 @@ class UserProfileController extends GetxController {
     FocusScope.of(context).unfocus();
     // app.resolve<CustomDialogs>().showCircularDialog(context);
     Map<String, dynamic> dict = {};
-    // GetStorage box = GetStorage();
-    print(box.read(StringConstants.userEmailAddress));
+
     dict["email"] = box.read(StringConstants.userEmailAddress);
     FormData data = FormData.fromMap(dict);
-    print(dict);
-
-    print(data);
 
     return NetworkClient.getInstance.callApi(
       context,
@@ -52,18 +48,13 @@ class UserProfileController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        print(response);
         hasData.value = true;
-        userProfileModel = UserProfileModel.fromJson(response);
-        print(userProfileModel!.img);
-        print(response);
+        UserProfileModelData userProfile =
+            UserProfileModelData.fromJson(response);
+        userProfileModel = userProfile.data;
       },
       failureCallback: (status, message) {
         hasData.value = true;
-
-        print(" error");
-
-        print(status);
       },
     );
   }

@@ -1,5 +1,5 @@
 import 'package:argon_user/Constants/color_constant.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
@@ -117,7 +117,7 @@ class NetworkClient {
     // app.resolve<CustomDialogs>().showCircularDialog(context);
     String statusCode = "response.data['code']";
     String message = "response.data['message']";
-    print(response.statusCode);
+    //  print(response.statusCode);
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 203) {
