@@ -116,9 +116,9 @@ class UserProfileView extends GetWidget<UserProfileController> {
                               //     ),
                               //   ),
                               // ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: MySize.getScaledSizeWidth(500)),
+                              Container(
+                                padding: EdgeInsets.only(left:  MySize.getScaledSizeWidth(400)
+                                    ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
