@@ -368,6 +368,7 @@ class HomeMainView extends GetWidget<HomeMainController> {
                                     controller.currentWidget =
                                         UserProfileView();
                                     controller.index.value = 5;
+                                    print("yvcwyucwyuvewyu");
                                   },
                                   child: Column(
                                     crossAxisAlignment:
@@ -391,9 +392,13 @@ class HomeMainView extends GetWidget<HomeMainController> {
                                           color: Colors.black,
                                         ),
                                       ),
+
                                     ],
                                   ),
-                                )
+                                ),
+                                IconButton(onPressed: () {
+                                        Get.offAllNamed(Routes.LOGIN);
+                                }, icon: Icon(Icons.logout)),
                               ],
                             )
                           ],
