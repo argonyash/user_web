@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:argon_user/Constants/api_constants.dart';
 import 'package:argon_user/Constants/string_constants.dart';
 import 'package:argon_user/Models/LogInModel.dart';
@@ -57,7 +59,7 @@ class LoginController extends GetxController {
       params: data,
       successCallback: (response, message) {
         app.resolve<CustomDialogs>().hideCircularDialog(context);
-        LogInModel loginModel = LogInModel.fromJson(response);
+        LogInModel loginModel = LogInModel.fromJson(jsonDecode(response));
 
         if (loginModel.status == 0) {
           app.resolve<CustomDialogs>().getDialog(

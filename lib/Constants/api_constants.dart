@@ -1,5 +1,5 @@
-const String baseURL = "https://dsrsoftech.com/vishal/argon/";
-const String imageURL = "https://dsrsoftech.com/vishal/argon/img/";
+const String baseURL = "http://43.205.254.247/";
+const String imageURL = "http://43.205.254.247/img/";
 
 class ApiConstant {
   static const logIn = "newlogin.php";

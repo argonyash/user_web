@@ -30,6 +30,7 @@ class HomeController extends GetxController {
   RxString second = "00".obs;
   RxString selected = "".obs;
   String serverDate = "";
+  DateTime serverFullTime = DateTime.now();
   String serverTime = "";
   Duration? myDuration;
   int totalSecond = 0;
@@ -44,6 +45,7 @@ class HomeController extends GetxController {
   void onInit() {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       GetStorage.init();
+      // await callApiForGetServerTime(context: Get.context!, isFromButton: true);
 
       callApiForClockInOrOutStatus(context: Get.context!);
       callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
@@ -75,7 +77,23 @@ class HomeController extends GetxController {
     dict["date"] = (!isNullEmptyOrFalse(serverDate))
         ? serverDate
         : DateFormat('yyyy-MM-dd').format(DateTime.now());
-    dict["total"] = "$totalSecond";
+    if ((webClockIn.value)) {
+      if (clockInOutModel != null) {
+        DateTime a = getDateFromString(
+            clockInOutModel!.data!.last.time.toString(),
+            formatter: 'HH:mm:ss');
+        DateTime b = DateTime(serverFullTime.year, serverFullTime.month,
+            serverFullTime.day, a.hour, a.minute, a.second);
+
+        num totalSec = serverFullTime.difference(b).inSeconds +
+            num.parse(clockInOutModel!.data!.last.total.toString());
+        dict["total"] = "$totalSec";
+      } else {
+        dict["total"] = "$totalSecond";
+      }
+    } else {
+      dict["total"] = "$totalSecond";
+    }
     dict["data_st"] = "at_entry";
     // dict["pass"] = passController.value.text;
     FormData data = FormData.fromMap(dict);
@@ -94,10 +112,12 @@ class HomeController extends GetxController {
         print(response);
 
         callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
-        if (response["status"] == "1") {
+        if (jsonDecode(response)["status"] == "1") {
           webClockIn.toggle();
           if (!webClockIn.value) {
             stopTimer();
+            callApiForClockInOrOutStatus(
+                context: Get.context!, isFromButton: true);
           } else {
             callApiForClockInOrOutStatus(
                 context: Get.context!, isFromButton: true);
@@ -157,7 +177,7 @@ class HomeController extends GetxController {
   }
 
   callApiForClockInOrOutStatus(
-      {required BuildContext context, bool isFromButton = false}) {
+      {required BuildContext context, bool isFromButton = false}) async {
     FocusScope.of(context).unfocus();
     if (!isFromButton) {
       app.resolve<CustomDialogs>().showCircularDialog(context);
@@ -165,8 +185,12 @@ class HomeController extends GetxController {
     Map<String, dynamic> dict = {};
 
     dict["email"] = box.read(StringConstants.userEmailAddress);
+    await callApiForGetServerTime(context: context, isFromButton: true);
 
-    dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    dict["date"] = (!isNullEmptyOrFalse(serverDate))
+        ? serverDate
+        : DateFormat('yyyy-MM-dd').format(DateTime.now());
 
     dict["data_st"] = "last_record";
 
@@ -179,22 +203,30 @@ class HomeController extends GetxController {
       MethodType.Post,
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
-      successCallback: (response, message) {
+      successCallback: (response, message) async {
         if (!isFromButton) {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
-        CheckInOutModel checkInOutModel = CheckInOutModel.fromJson(response);
+        await callApiForGetServerTime(
+            context: Get.context!, isFromButton: true);
+        CheckInOutModel checkInOutModel =
+            CheckInOutModel.fromJson(jsonDecode(response));
         if (checkInOutModel != null &&
             !isNullEmptyOrFalse(checkInOutModel.data)) {
           if (checkInOutModel.data!.st == "in") {
             webClockIn.value = true;
-            DateTime now = getDateFromString(
-                checkInOutModel.data!.time.toString(),
+            DateTime a = getDateFromString(
+                clockInOutModel!.data!.last.time.toString(),
                 formatter: 'HH:mm:ss');
+            DateTime b = DateTime(serverFullTime.year, serverFullTime.month,
+                serverFullTime.day, a.hour, a.minute, a.second);
+            // DateTime now = getDateFromString(
+            //     checkInOutModel.data!.time.toString(),
+            //     formatter: 'HH:mm:ss');
             totalSecond = int.parse(checkInOutModel.data!.total.toString());
-            print("now" + now.toString());
-
-            Duration diff = DateTime.now().difference(now);
+            print("now" + b.toString());
+            await callApiForGetServerTime(context: Get.context!);
+            Duration diff = serverFullTime.difference(b);
             print(diff.inSeconds.toString() + "didd");
             //  print(diff.inSeconds.toString() + "adsa");
             myDuration = Duration(
@@ -203,10 +235,10 @@ class HomeController extends GetxController {
             startTimer();
           } else {
             webClockIn.value = false;
-            DateTime now = getDateFromString(
-                checkInOutModel.data!.time.toString(),
-                formatter: 'HH:mm:ss');
-            print("nowb" + now.toString());
+            // DateTime now = getDateFromString(
+            //     checkInOutModel.data!.time.toString(),
+            //     formatter: 'HH:mm:ss');
+            // print("nowb" + now.toString());
 
             Duration diff = Duration(
                 seconds: int.parse(checkInOutModel.data!.total.toString()));
@@ -254,6 +286,12 @@ class HomeController extends GetxController {
         }
         Map s = jsonDecode(response);
         // response as Map<String, String>;
+        DateTime sDate =
+            getDateFromString(s["date"].toString(), formatter: 'yyyy-MM-dd');
+        DateTime sTime =
+            getDateFromString(s["time"].toString(), formatter: 'HH:mm:ss');
+        serverFullTime = DateTime(sDate.year, sDate.month, sDate.day,
+            sTime.hour, sTime.minute, sTime.second);
         serverDate = s["date"].toString();
         serverTime = s["time"].toString();
         print(response);
@@ -272,7 +310,7 @@ class HomeController extends GetxController {
   }
 
   callApiForGetTodayEntry(
-      {required BuildContext context, bool isFromButton = false}) {
+      {required BuildContext context, bool isFromButton = false}) async {
     FocusScope.of(context).unfocus();
     if (!isFromButton) {
       app.resolve<CustomDialogs>().showCircularDialog(context);
@@ -282,8 +320,12 @@ class HomeController extends GetxController {
     //print("aa" + box.read(StringConstants.userEmailAddress));
     dict["email"] = box.read(StringConstants.userEmailAddress);
     print(box.read(StringConstants.userEmailAddress));
+    await callApiForGetServerTime(context: context, isFromButton: true);
 
-    dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    dict["date"] = (!isNullEmptyOrFalse(serverDate))
+        ? serverDate
+        : DateFormat('yyyy-MM-dd').format(DateTime.now());
 
     dict["data_st"] = "today_entry";
 
@@ -302,7 +344,7 @@ class HomeController extends GetxController {
         if (!isFromButton) {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
-        clockInOutModel = ClockInOutModel.fromJson(response);
+        clockInOutModel = ClockInOutModel.fromJson(jsonDecode(response));
       },
       failureCallback: (status, message) {
         hasData.value = true;

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:argon_user/Constants/string_constants.dart';
 import 'package:argon_user/Models/UserProfileModel.dart';
 import 'package:dio/dio.dart';
@@ -50,7 +52,7 @@ class UserProfileController extends GetxController {
       successCallback: (response, message) {
         hasData.value = true;
         UserProfileModelData userProfile =
-            UserProfileModelData.fromJson(response);
+            UserProfileModelData.fromJson(jsonDecode(response));
         userProfileModel = userProfile.data;
       },
       failureCallback: (status, message) {
