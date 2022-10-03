@@ -87,7 +87,7 @@ class AttandanceController extends GetxController {
     dict["email"] = box.read(StringConstants.userEmailAddress);
 
     dict["date1"] = DateFormat('yyyy-MM-dd')
-        .format(DateTime(now.value.year - 1, now.value.month, now.value.day));
+        .format(DateTime(now.value.year, now.value.month - 7, now.value.day));
 
     dict["date2"] = DateFormat('yyyy-MM-dd').format(getLastDateOfMonth(
         DateTime(now.value.year, now.value.month + 3, now.value.day)));
