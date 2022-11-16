@@ -17,6 +17,7 @@ import '../../../../Models/ClockInOutModel.dart';
 import '../../../../Utilities/customeDialogs.dart';
 import '../../../../main.dart';
 import '../../../data/network_client.dart';
+import '../../../routes/app_pages.dart';
 
 class HomeController extends GetxController {
   RxInt selectedDrawerIndex = 0.obs;
@@ -41,12 +42,19 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      GetStorage.init();
-      myApiCallApiForGetServerTime(context: Get.context!);
-      // callApiForClockInOrOutStatus(context: Get.context!);
-      // callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
-    });
+    print("Box Mail := ${box.read(StringConstants.userEmailAddress)}");
+    if (isNullEmptyOrFalse(box.read(StringConstants.userEmailAddress)) ||
+        isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
+      Get.offAllNamed(Routes.LOGIN);
+    } else {
+      WidgetsBinding.instance!.addPostFrameCallback((_) async {
+        GetStorage.init();
+        myApiCallApiForGetServerTime(context: Get.context!);
+        // callApiForClockInOrOutStatus(context: Get.context!);
+        // callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
+      });
+    }
+
     super.onInit();
 
     myDuration = Duration(days: 5);
@@ -138,8 +146,8 @@ class HomeController extends GetxController {
       successCallback: (response, message) async {
         Map<String, dynamic> temp = jsonDecode(response);
         print(
-            "MyApiCallApiForClockInOrOutStatus Done := Response := ${temp["data"].runtimeType}");
-        if (temp["data"].runtimeType == List<dynamic>) {
+            "MyApiCallApiForClockInOrOutStatus Done := Response := ${temp["data"].runtimeType} === > isNull := ${isNullEmptyOrFalse(temp["data"])}");
+        if (isNullEmptyOrFalse(temp["data"])) {
           myHasData.value = true;
         } else {
           CheckInOutModel checkInOutModel =

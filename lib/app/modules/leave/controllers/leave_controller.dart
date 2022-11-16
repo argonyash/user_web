@@ -13,6 +13,7 @@ import '../../../../Constants/string_constants.dart';
 import '../../../../Utilities/customeDialogs.dart';
 import '../../../../main.dart';
 import '../../../data/network_client.dart';
+import '../../../routes/app_pages.dart';
 
 class LeaveController extends GetxController {
   //TODO: Implement LeaveController
@@ -28,10 +29,16 @@ class LeaveController extends GetxController {
   final count = 1.obs;
   @override
   void onInit() {
+    print("Box Mail := ${box.read(StringConstants.userEmailAddress)}");
+    if (isNullEmptyOrFalse(box.read(StringConstants.userEmailAddress)) ||
+        isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
+      Get.offAllNamed(Routes.LOGIN);
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        callApiForGetLeave(context: Get.context!, isFromButton: true);
+      });
+    }
     super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      callApiForGetLeave(context: Get.context!, isFromButton: true);
-    });
   }
 
   @override

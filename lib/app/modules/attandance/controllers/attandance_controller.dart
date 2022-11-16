@@ -15,6 +15,7 @@ import '../../../../Utilities/customeDialogs.dart';
 import '../../../../Utilities/utility_functions.dart';
 import '../../../../main.dart';
 import '../../../data/network_client.dart';
+import '../../../routes/app_pages.dart';
 import '../views/attandance_view.dart';
 
 class AttandanceController extends GetxController {
@@ -42,12 +43,19 @@ class AttandanceController extends GetxController {
 
   @override
   void onInit() {
-    getLastDateOfMonth(now.value);
+    print("Box Mail := ${box.read(StringConstants.userEmailAddress)}");
+    if (isNullEmptyOrFalse(box.read(StringConstants.userEmailAddress)) ||
+        isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
+      Get.offAllNamed(Routes.LOGIN);
+    } else {
+      getLastDateOfMonth(now.value);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
-      callApiForGetHolidays(context: Get.context!, isFromButton: true);
-    });
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
+        callApiForGetHolidays(context: Get.context!, isFromButton: true);
+      });
+    }
+
     super.onInit();
   }
 

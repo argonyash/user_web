@@ -9,9 +9,11 @@ import 'package:get/get.dart' hide FormData;
 import 'package:get_storage/get_storage.dart';
 
 import '../../../../Constants/api_constants.dart';
+import '../../../../Constants/sizeConstant.dart';
 import '../../../../Utilities/customeDialogs.dart';
 import '../../../../main.dart';
 import '../../../data/network_client.dart';
+import '../../../routes/app_pages.dart';
 
 class UserProfileController extends GetxController {
   final count = 0.obs;
@@ -21,10 +23,16 @@ class UserProfileController extends GetxController {
 
   @override
   void onInit() {
+    print("Box Mail := ${box.read(StringConstants.userEmailAddress)}");
+    if (isNullEmptyOrFalse(box.read(StringConstants.userEmailAddress)) ||
+        isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
+      Get.offAllNamed(Routes.LOGIN);
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        callApiForGetUserDetail(context: Get.context!);
+      });
+    }
     super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      callApiForGetUserDetail(context: Get.context!);
-    });
   }
 
   @override
