@@ -392,13 +392,14 @@ class HomeMainView extends GetWidget<HomeMainController> {
                                           color: Colors.black,
                                         ),
                                       ),
-
                                     ],
                                   ),
                                 ),
-                                IconButton(onPressed: () {
-                                        Get.offAllNamed(Routes.LOGIN);
-                                }, icon: Icon(Icons.logout)),
+                                IconButton(
+                                    onPressed: () {
+                                      Get.offAllNamed(Routes.LOGIN);
+                                    },
+                                    icon: Icon(Icons.logout)),
                               ],
                             )
                           ],

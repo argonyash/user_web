@@ -1018,21 +1018,37 @@ class LeaveView extends GetWidget<LeaveController> {
           title: Text('Delete Leave'),
           content: const Text('Are you sure you want to delete your leave?'),
           actions: <Widget>[
-            FlatButton(
-              child: const Text('Cancel'),
-              onPressed: () {
+            InkWell(
+              child: Container(
+                  height: MySize.getScaledSizeHeight(40),
+                  width: MySize.getScaledSizeWidth(100),
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(
+                          MySize.getScaledSizeHeight(10))),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.white),
+                  )),
+              onTap: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              child: const Text(
-                'Delete',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              color: Colors.red,
-              onPressed: () {
+            InkWell(
+              child: Container(
+                  height: MySize.getScaledSizeHeight(40),
+                  width: MySize.getScaledSizeWidth(100),
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(
+                          MySize.getScaledSizeHeight(10))),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Delete",
+                    style: TextStyle(color: Colors.white),
+                  )),
+              onTap: () {
                 Navigator.of(context).pop();
                 controller.callApiForDeleteLeave(
                     context: Get.context!,
