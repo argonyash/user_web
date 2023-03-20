@@ -1,7 +1,7 @@
 // const String baseURL = "http://43.205.254.247/";
 // const String imageURL = "http://43.205.254.247/img/";
-const String baseURL = "http://43.205.254.247/api/";
-const String imageURL = "http://43.205.254.247/api/img/";
+const String baseURL = "http://3.109.125.94/api/";
+const String imageURL = "http://3.109.125.94/api/img/";
 
 class ApiConstant {
   static const logIn = "newlogin.php";

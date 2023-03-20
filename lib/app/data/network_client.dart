@@ -62,8 +62,8 @@ class NetworkClient {
     dio.options.validateStatus = (status) {
       return status! <= 502;
     };
-    dio.options.connectTimeout = 50000; //5s
-    dio.options.receiveTimeout = 50000;
+    dio.options.connectTimeout = Duration(seconds: 5); //5s
+    dio.options.receiveTimeout = Duration(seconds: 5);
 
     if (headers != null) {
       for (var key in headers.keys) {
