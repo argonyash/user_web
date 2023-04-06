@@ -587,6 +587,7 @@ class HomeController extends GetxController {
   }
 
   getChartData() {
+    chartData.clear();
     dataEntryList.forEach((element) {
       chartData.add(ChartSampleData(
           x: element.date!,
