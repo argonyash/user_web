@@ -45,9 +45,22 @@ class HomeView extends GetWidget<HomeController> {
                           children: [
                             Row(
                               children: [
-                                Text("Average Hours:-"),
                                 Text(
-                                    "${(Duration(seconds: controller.monthTotalTime.value).inHours / controller.dataList.length).toStringAsFixed(2)}")
+                                  "Average Hours:- ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: MySize.size26,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  "${(Duration(seconds: controller.monthTotalTime.value).inHours / controller.dataList.length).toStringAsFixed(2)}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: MySize.size26,
+                                    color: Colors.black,
+                                  ),
+                                )
                               ],
                             ),
                             Container(
@@ -694,7 +707,12 @@ class HomeView extends GetWidget<HomeController> {
         xValueMapper: (ChartSampleData sales, _) =>
             sales.x.toString().split("-")[2],
         yValueMapper: (ChartSampleData sales, _) => sales.y,
-        color: Colors.blue,
+        pointColorMapper: (ChartSampleData sales, index) =>
+            (sales.y! > 8 && sales.y! < 10)
+                ? Colors.orange
+                : (sales.y! > 10)
+                    ? Colors.red
+                    : Colors.blue,
       )
     ];
   }
