@@ -669,6 +669,7 @@ class HomeView extends GetWidget<HomeController> {
         xValueMapper: (ChartSampleData sales, _) =>
             sales.x.toString().split("-")[2],
         yValueMapper: (ChartSampleData sales, _) => sales.y,
+        color: appTheme.primaryTheme,
       )
     ];
   }
