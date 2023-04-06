@@ -47,7 +47,7 @@ class HomeView extends GetWidget<HomeController> {
                               children: [
                                 Text("Average Hours:-"),
                                 Text(
-                                    "${Duration(seconds: controller.monthTotalTime.value).inHours / controller.dataList.length}")
+                                    "${(Duration(seconds: controller.monthTotalTime.value).inHours / controller.dataList.length).toStringAsFixed(2)}")
                               ],
                             ),
                             Container(
@@ -213,13 +213,38 @@ class HomeView extends GetWidget<HomeController> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          "Today's Hours : ",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: MySize.size26,
-                                            color: Colors.black,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                controller
+                                                    .totalMonthHourVisibleCounter++;
+                                              },
+                                              child: Text(
+                                                "Today's Hours : ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: MySize.size26,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                            (controller.totalMonthHourVisibleCounter
+                                                        .value >
+                                                    5)
+                                                ? Text(
+                                                    "${Duration(seconds: controller.monthTotalTime.value).inHours}",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: MySize.size26,
+                                                      color: Colors.black,
+                                                    ),
+                                                  )
+                                                : Container(),
+                                          ],
                                         ),
                                         Space.height(15),
                                         Row(

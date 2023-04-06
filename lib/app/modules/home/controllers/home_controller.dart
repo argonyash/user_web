@@ -65,6 +65,7 @@ class HomeController extends GetxController {
   RxBool myHasData = false.obs;
   List<String> columnData = ["Status", "Time"];
 
+  RxInt totalMonthHourVisibleCounter = 0.obs;
   @override
   void onInit() {
     print("Box Mail := ${box.read(StringConstants.userEmailAddress)}");
