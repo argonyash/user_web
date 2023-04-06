@@ -15,6 +15,7 @@ dependencies:
   ntp: ^2.0.0
   get_storage:
   grouped_list: ^5.1.1
+  syncfusion_flutter_charts: ^21.1.38
   table_sticky_headers:
   syncfusion_flutter_datepicker:
   month_year_picker:

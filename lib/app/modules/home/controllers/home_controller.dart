@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:argon_user/Constants/sizeConstant.dart';
 import 'package:argon_user/Models/checkInOutModel.dart';
 import 'package:argon_user/Utilities/utility_functions.dart';
@@ -7,17 +8,22 @@ import 'package:argon_user/app/modules/login/controllers/login_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData;
-import 'package:get_storage/get_storage.dart';
+
 import 'package:intl/intl.dart';
 import 'package:ntp/ntp.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 import '../../../../Constants/api_constants.dart';
 import '../../../../Constants/string_constants.dart';
 import '../../../../Models/ClockInOutModel.dart';
+import '../../../../Models/DateWiseDataModel.dart';
+import '../../../../Models/chart_sample_data.dart';
+import '../../../../Models/holidayDataModel.dart';
 import '../../../../Utilities/customeDialogs.dart';
 import '../../../../main.dart';
 import '../../../data/network_client.dart';
 import '../../../routes/app_pages.dart';
+import '../../attandance/controllers/attandance_controller.dart';
 
 class HomeController extends GetxController {
   RxInt selectedDrawerIndex = 0.obs;
@@ -32,9 +38,28 @@ class HomeController extends GetxController {
   String serverTime = "";
   Duration? myDuration;
   int totalSecond = 0;
+  RxString selectedDate = "".obs;
+  final count = 0.obs;
+  Rx<DateTime> now = DateTime.now().obs;
+  Rx<DateTime> selectedMonth = DateTime.now().obs;
+  late RxInt selectedIndexForEntry;
+  RxString totalTime = getTotalTime(0).obs;
+  RxInt counter = 0.obs;
+  RxList<ChartSampleData> chartData = RxList<ChartSampleData>([]);
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   RxBool webClockIn = false.obs;
   ClockInOutModel? clockInOutModel;
+
+  RxList<AttendanceDetail> getDataOfDay = RxList<AttendanceDetail>([]);
+  RxList<AttendanceDetail> dataEntryList = RxList<AttendanceDetail>([]);
+  RxList<AttendanceDetailsModel> dataList = RxList<AttendanceDetailsModel>([]);
+  late DateTime lastDateOfMonth;
+  RxList<HolidayData> allHolidayList = RxList<HolidayData>([]);
+
+  RxInt monthTotalTime = 0.obs;
+  RxList<AttendanceDetailsModel> attendanceDetailsList =
+      RxList<AttendanceDetailsModel>([]);
   ScrollControllers? scrollController = ScrollControllers();
   RxBool hasData = false.obs;
   RxBool myHasData = false.obs;
@@ -47,9 +72,13 @@ class HomeController extends GetxController {
         isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
       Get.offAllNamed(Routes.LOGIN);
     } else {
-      WidgetsBinding.instance!.addPostFrameCallback((_) async {
-        GetStorage.init();
+      selectedIndexForEntry = 0.obs;
+
+      lastDateOfMonth = getLastDateOfMonth(selectedMonth.value);
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         myApiCallApiForGetServerTime(context: Get.context!);
+        await getAttendanceDetails(context: Get.context!);
+        // callApiForGetDateWiseEntry(context: Get.context!);
         // callApiForClockInOrOutStatus(context: Get.context!);
         // callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
       });
@@ -257,6 +286,7 @@ class HomeController extends GetxController {
             callApiForClockInOrOutStatus(
                 context: Get.context!, isFromButton: true);
           }
+          getAttendanceDetails(context: Get.context!);
         }
       },
       failureCallback: (status, message) {
@@ -301,6 +331,7 @@ class HomeController extends GetxController {
         }
         await callApiForGetServerTime(
             context: Get.context!, isFromButton: true);
+
         CheckInOutModel checkInOutModel =
             CheckInOutModel.fromJson(jsonDecode(response));
         if (checkInOutModel != null &&
@@ -453,6 +484,116 @@ class HomeController extends GetxController {
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
   }
 
+  getAttendanceDetails({required BuildContext context}) async {
+    dataEntryList.clear();
+    dataList.clear();
+    attendanceDetailsList.clear();
+    monthTotalTime.value = 0;
+    hasData.value = false;
+    Map<String, dynamic> dict = {};
+    if (selectedMonth.value.month == DateTime.now().month) {
+      lastDateOfMonth = DateTime.now();
+    }
+    dict["email"] = box.read(StringConstants.userEmailAddress);
+    dict["date1"] =
+        "${selectedMonth.value.year}-${selectedMonth.value.month}-01";
+    dict["date2"] =
+        "${selectedMonth.value.year}-${selectedMonth.value.month}-${lastDateOfMonth.day}";
+    FormData formData = FormData.fromMap(dict);
+    NetworkClient.getInstance.callApi(
+      context,
+      baseURL,
+      ApiConstant.dateWiseData,
+      MethodType.Post,
+      headers: NetworkClient.getInstance.getAuthHeaders(),
+      params: formData,
+      successCallback: (response, message) async {
+        hasData.value = true;
+        List res = jsonDecode(response);
+        if (!isNullEmptyOrFalse(res)) {
+          res.forEach((element) {
+            AttendanceDetailsModel attendanceDetailsModel =
+                AttendanceDetailsModel.fromJson(element);
+            dataList.add(attendanceDetailsModel);
+          });
+          attendanceDetailsList.addAll(dataList);
+          if (!isNullEmptyOrFalse(attendanceDetailsList)) {
+            dataList.clear();
+            attendanceDetailsList.forEach((element) {
+              if (!isNullEmptyOrFalse(element.data)) {
+                dataList.add(element);
+                if (!isNullEmptyOrFalse(element.data!.last.total)) {
+                  monthTotalTime.value = monthTotalTime.value +
+                      int.parse(element.data!.last.total!);
+                }
+                // print(
+                //     " Main : = ${monthTotalTime.value} MainTimne: = ${getTotalTime(monthTotalTime.value)}, total : = ${element.data!.last.total}  Seconds := ${getTotalTime(int.parse(element.data!.last.total!))}");
+              }
+            });
+            log(dataList.length.toString());
+            if (selectedIndexForEntry.value == 0) {
+              selectedIndexForEntry.value = attendanceDetailsList.length - 1;
+
+              if (!isNullEmptyOrFalse(attendanceDetailsList.last.data)) {
+                totalTime.value = getTotalTime(
+                    int.parse(attendanceDetailsList.last.data!.last.total!));
+              }
+            } else {
+              totalTime.value = getTotalTime(int.parse(
+                  attendanceDetailsList[selectedIndexForEntry.value]
+                      .data!
+                      .last
+                      .total!));
+            }
+            counter.value = 0;
+            attendanceDetailsList.forEach((element) {
+              if (isNullEmptyOrFalse(element.data)) {
+                DateTime now = DateTime.now();
+                if ((getDateFromString(element.date!,
+                            formatter: "yyyy-MM-dd") !=
+                        DateTime(now.year, now.month, now.day)) &&
+                    (getDateFromString(element.date!, formatter: "yyyy-MM-dd")
+                            .weekday !=
+                        7)) {
+                  bool isDateContains = false;
+
+                  if (isDateContains) {
+                    counter.value++;
+                  }
+                }
+              }
+            });
+          }
+          if (!isNullEmptyOrFalse(attendanceDetailsList)) {
+            attendanceDetailsList.forEach((element) {
+              element.data!.forEach((element) {
+                dataEntryList.add(element);
+              });
+            });
+          }
+
+          log(dataEntryList.length.toString());
+          await getChartData();
+        }
+      },
+      failureCallback: (status, message) {
+        hasData.value = true;
+        app
+            .resolve<CustomDialogs>()
+            .getDialog(title: "Failed", desc: "Something went wrong.");
+        print(" error ");
+      },
+    );
+  }
+
+  getChartData() {
+    dataEntryList.forEach((element) {
+      chartData.add(ChartSampleData(
+          x: element.date!,
+          y: Duration(seconds: int.parse(element.total!)).inHours));
+    });
+  }
+
   // Step 4
   void stopTimer() {
     countdownTimer!.cancel();
@@ -496,4 +637,17 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {}
+}
+
+String getTotalTime(int sec) {
+  Duration diff = Duration(seconds: sec);
+  // totalSecond = int.parse(checkInOutModel.data!.total.toString());
+  String h = strDigits(diff.inHours.remainder(24));
+  String mm = strDigits(diff.inMinutes.remainder(60));
+  String ss = strDigits(diff.inSeconds.remainder(60));
+  return '$h : $mm : $ss';
+}
+
+String strDigits(int n) {
+  return n.toString().padLeft(2, '0');
 }

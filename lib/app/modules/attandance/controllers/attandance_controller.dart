@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:argon_user/Constants/string_constants.dart';
+import 'package:argon_user/Models/chart_sample_data.dart';
 import 'package:argon_user/Models/holidayDataModel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -62,13 +63,6 @@ class AttandanceController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-  }
-
-  getLastDateOfMonth(DateTime now) {
-    DateTime lastDayOfMonth = new DateTime(now.year, now.month + 1, 0);
-    DateTime fDayOfMonth = new DateTime(now.year, now.month, 1);
-
-    return lastDayOfMonth;
   }
 
   getTotalTime(int sec) {
@@ -228,4 +222,11 @@ class AttandanceController extends GetxController {
   @override
   void onClose() {}
   void increment() => count.value++;
+}
+
+getLastDateOfMonth(DateTime now) {
+  DateTime lastDayOfMonth = new DateTime(now.year, now.month + 1, 0);
+  DateTime fDayOfMonth = new DateTime(now.year, now.month, 1);
+
+  return lastDayOfMonth;
 }
