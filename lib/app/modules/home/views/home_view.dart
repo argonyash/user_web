@@ -709,12 +709,15 @@ class HomeView extends GetWidget<HomeController> {
         xValueMapper: (ChartSampleData sales, _) =>
             sales.x.toString().split("-")[2],
         yValueMapper: (ChartSampleData sales, _) => sales.y,
-        pointColorMapper: (ChartSampleData sales, index) =>
-            (sales.y! > 8 && sales.y! <= 10)
-                ? Colors.orange
-                : (sales.y! > 10)
-                    ? Colors.red
-                    : Colors.blue,
+        pointColorMapper: (ChartSampleData sales, index) => (sales.y! == 9)
+            ? Colors.orange.shade200
+            : (sales.y! > 9)
+                ? Colors.deepOrange.shade200
+                : (sales.y! <= 7)
+                    ? Colors.red.shade400
+                    : Colors.blue.shade200,
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true, textStyle: TextStyle(fontSize: 10)),
       )
     ];
   }

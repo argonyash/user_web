@@ -572,9 +572,26 @@ class HomeController extends GetxController {
               });
             });
           }
-
+          chartData.clear();
+          if (!isNullEmptyOrFalse(attendanceDetailsList)) {
+            attendanceDetailsList.forEach((element) {
+              if (!isNullEmptyOrFalse(element.data)) {
+                if (!isNullEmptyOrFalse(element.data!.last)) {
+                  chartData.add(
+                    ChartSampleData(
+                      x: element.data!.last.date!,
+                      y: Duration(seconds: int.parse(element.data!.last.total!))
+                          .inHours,
+                    ),
+                  );
+                }
+              }
+              // element.data!.forEach((element) {
+              //   dataEntryListChart.add(element);
+              // });
+            });
+          }
           log(dataEntryList.length.toString());
-          await getChartData();
         }
       },
       failureCallback: (status, message) {
@@ -587,14 +604,14 @@ class HomeController extends GetxController {
     );
   }
 
-  getChartData() {
-    chartData.clear();
-    dataEntryList.forEach((element) {
-      chartData.add(ChartSampleData(
-          x: element.date!,
-          y: Duration(seconds: int.parse(element.total!)).inHours));
-    });
-  }
+  // getChartData() {
+  //   chartData.clear();
+  //   dataEntryList.forEach((element) {
+  //     chartData.add(ChartSampleData(
+  //         x: element.date!,
+  //         y: Duration(seconds: int.parse(element.total!)).inHours));
+  //   });
+  // }
 
   // Step 4
   void stopTimer() {
