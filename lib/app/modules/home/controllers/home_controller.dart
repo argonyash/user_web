@@ -68,7 +68,7 @@ class HomeController extends GetxController {
   RxInt totalMonthHourVisibleCounter = 0.obs;
   @override
   void onInit() {
-    print("Box Mail := ${box.read(StringConstants.userEmailAddress)}");
+    // print("Box Mail := ${box.read(StringConstants.userEmailAddress)}");
     if (isNullEmptyOrFalse(box.read(StringConstants.userEmailAddress)) ||
         isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
       Get.offAllNamed(Routes.LOGIN);
@@ -103,7 +103,7 @@ class HomeController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        print("myApiCallApiForGetServerTime Done");
+        // print("myApiCallApiForGetServerTime Done");
         Map s = jsonDecode(response);
         DateTime sDate =
             getDateFromString(s["date"].toString(), formatter: 'yyyy-MM-dd');
@@ -118,8 +118,8 @@ class HomeController extends GetxController {
       failureCallback: (status, message) {
         myHasData.value = true;
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
-        print(" error");
-        print(status);
+        //print(" error");
+        //print(status);
       },
     );
   }
@@ -143,7 +143,7 @@ class HomeController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: formData,
       successCallback: (response, message) {
-        print("MyApiCallForGetTodayEntry Done");
+        //  print("MyApiCallForGetTodayEntry Done");
 
         clockInOutModel = ClockInOutModel.fromJson(jsonDecode(response));
         // myHasData.value = true;
@@ -175,8 +175,8 @@ class HomeController extends GetxController {
       params: formData,
       successCallback: (response, message) async {
         Map<String, dynamic> temp = jsonDecode(response);
-        print(
-            "MyApiCallApiForClockInOrOutStatus Done := Response := ${temp["data"].runtimeType} === > isNull := ${isNullEmptyOrFalse(temp["data"])}");
+        // print(
+        //     "MyApiCallApiForClockInOrOutStatus Done := Response := ${temp["data"].runtimeType} === > isNull := ${isNullEmptyOrFalse(temp["data"])}");
         if (isNullEmptyOrFalse(temp["data"])) {
           myHasData.value = true;
         } else {
@@ -238,7 +238,7 @@ class HomeController extends GetxController {
         ? serverTime
         : DateFormat('HH:mm:ss').format(DateTime.now());
     //
-    print(DateFormat('HH:mm:ss').format(DateTime.now()));
+    //  print(DateFormat('HH:mm:ss').format(DateTime.now()));
     dict["date"] = (!isNullEmptyOrFalse(serverDate))
         ? serverDate
         : DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -262,8 +262,8 @@ class HomeController extends GetxController {
     dict["data_st"] = "at_entry";
     // dict["pass"] = passController.value.text;
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
+    // print(dict);
+    // print(data);
 
     return NetworkClient.getInstance.callApi(
       context,
@@ -274,7 +274,7 @@ class HomeController extends GetxController {
       params: data,
       successCallback: (response, message) {
         app.resolve<CustomDialogs>().hideCircularDialog(context);
-        print(response);
+        // print(response);
 
         callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
         if (jsonDecode(response)["status"] == "1") {
@@ -294,9 +294,9 @@ class HomeController extends GetxController {
         app.resolve<CustomDialogs>().hideCircularDialog(context);
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
 
-        print(" error");
-
-        print(status);
+        // print(" error");
+        //
+        // print(status);
       },
     );
   }
@@ -348,10 +348,10 @@ class HomeController extends GetxController {
             //     checkInOutModel.data!.time.toString(),
             //     formatter: 'HH:mm:ss');
             totalSecond = int.parse(checkInOutModel.data!.total.toString());
-            print("now" + b.toString());
+            // print("now" + b.toString());
             await callApiForGetServerTime(context: Get.context!);
             Duration diff = serverFullTime.difference(b);
-            print(diff.inSeconds.toString() + "didd");
+            // print(diff.inSeconds.toString() + "didd");
             //  print(diff.inSeconds.toString() + "adsa");
             myDuration = Duration(
                 seconds: (diff.inSeconds +
@@ -372,7 +372,7 @@ class HomeController extends GetxController {
             second.value = strDigits(diff.inSeconds.remainder(60));
           }
         }
-        print(response);
+        // print(response);
       },
       failureCallback: (status, message) {
         if (!isFromButton) {
@@ -380,9 +380,9 @@ class HomeController extends GetxController {
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
 
-        print(" error");
-
-        print(status);
+        // print(" error");
+        //
+        // print(status);
       },
     );
   }
@@ -397,7 +397,7 @@ class HomeController extends GetxController {
     hasData.value = false;
     //print("aa" + box.read(StringConstants.userEmailAddress));
     dict["email"] = box.read(StringConstants.userEmailAddress);
-    print(box.read(StringConstants.userEmailAddress));
+    // print(box.read(StringConstants.userEmailAddress));
     await callApiForGetServerTime(context: context, isFromButton: true);
     // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
     dict["date"] = (!isNullEmptyOrFalse(serverDate))
@@ -417,7 +417,7 @@ class HomeController extends GetxController {
       params: data,
       successCallback: (response, message) {
         hasData.value = true;
-        print(response);
+        //print(response);
         if (!isFromButton) {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
@@ -443,7 +443,7 @@ class HomeController extends GetxController {
     Map<String, dynamic> dict = {};
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
+    //print(dict);
     return NetworkClient.getInstance.callApi(
       context,
       baseURL,
@@ -465,7 +465,7 @@ class HomeController extends GetxController {
             sTime.hour, sTime.minute, sTime.second);
         serverDate = s["date"].toString();
         serverTime = s["time"].toString();
-        print(response);
+        // print(response);
       },
       failureCallback: (status, message) {
         if (!isFromButton) {
@@ -473,9 +473,9 @@ class HomeController extends GetxController {
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
 
-        print(" error");
-
-        print(status);
+        // print(" error");
+        //
+        // print(status);
       },
     );
   }
@@ -582,7 +582,7 @@ class HomeController extends GetxController {
         app
             .resolve<CustomDialogs>()
             .getDialog(title: "Failed", desc: "Something went wrong.");
-        print(" error ");
+        //print(" error ");
       },
     );
   }
@@ -612,7 +612,7 @@ class HomeController extends GetxController {
     final reduceSecondsBy = 1;
 
     final seconds = myDuration!.inSeconds + reduceSecondsBy;
-    print(myDuration!.inSeconds + reduceSecondsBy);
+    // print(myDuration!.inSeconds + reduceSecondsBy);
     totalSecond = (myDuration!.inSeconds + reduceSecondsBy);
 
     if (seconds < 0) {

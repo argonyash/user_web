@@ -90,8 +90,8 @@ class AttandanceNewController extends GetxController {
     // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
-    print(data);
+   // print(dict);
+    //print(data);
     hasData.value = false;
 
     return NetworkClient.getInstance.callApi(
@@ -120,9 +120,9 @@ class AttandanceNewController extends GetxController {
         //   getDataOfDay.value.add(element);
         // });
 
-        print(attandanceList);
+      //  print(attandanceList);
 
-        print(response);
+       // print(response);
       },
       failureCallback: (status, message) {
         hasData.value = true;
@@ -132,9 +132,9 @@ class AttandanceNewController extends GetxController {
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
 
-        print(" error");
+      //  print(" error");
 
-        print(status);
+        //print(status);
       },
     );
   }

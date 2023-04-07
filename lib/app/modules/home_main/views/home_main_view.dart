@@ -368,7 +368,7 @@ class HomeMainView extends GetWidget<HomeMainController> {
                                     controller.currentWidget =
                                         UserProfileView();
                                     controller.index.value = 5;
-                                    print("yvcwyucwyuvewyu");
+                                    //print("yvcwyucwyuvewyu");
                                   },
                                   child: Column(
                                     crossAxisAlignment:

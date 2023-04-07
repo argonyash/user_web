@@ -16,7 +16,7 @@ class HomeMainController extends GetxController {
   RxInt index = 0.obs;
   @override
   void onInit() {
-    print("Box Mail := ${box.read(StringConstants.userEmailAddress)}");
+    // print("Box Mail := ${box.read(StringConstants.userEmailAddress)}");
     if (isNullEmptyOrFalse(box.read(StringConstants.userEmailAddress)) ||
         isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
       Get.offAllNamed(Routes.LOGIN);

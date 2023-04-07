@@ -18,12 +18,12 @@ void main() async {
   await GetStorage.init();
 
   setup();
-  print(box.read(StringConstants.userEmailAddress));
-  print(box.read(StringConstants.isUserLogIn));
+  // print(box.read(StringConstants.userEmailAddress));
+  // print(box.read(StringConstants.isUserLogIn));
   if (isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
     box.write(StringConstants.isUserLogIn, false);
   }
-  print("asasa");
+ // print("asasa");
   runApp(
     GetMaterialApp(
       localizationsDelegates: [

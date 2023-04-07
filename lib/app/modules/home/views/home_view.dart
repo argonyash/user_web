@@ -708,7 +708,7 @@ class HomeView extends GetWidget<HomeController> {
             sales.x.toString().split("-")[2],
         yValueMapper: (ChartSampleData sales, _) => sales.y,
         pointColorMapper: (ChartSampleData sales, index) =>
-            (sales.y! > 8 && sales.y! < 10)
+            (sales.y! > 8 && sales.y! <= 10)
                 ? Colors.orange
                 : (sales.y! > 10)
                     ? Colors.red

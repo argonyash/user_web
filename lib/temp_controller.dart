@@ -222,10 +222,10 @@ class TempController extends GetxController {
             //     checkInOutModel.data!.time.toString(),
             //     formatter: 'HH:mm:ss');
             totalSecond = int.parse(checkInOutModel.data!.total.toString());
-            print("now" + b.toString());
+            // print("now" + b.toString());
             await callApiForGetServerTime(context: Get.context!);
             Duration diff = serverFullTime.difference(b);
-            print(diff.inSeconds.toString() + "didd");
+            //  print(diff.inSeconds.toString() + "didd");
             //  print(diff.inSeconds.toString() + "adsa");
             myDuration = Duration(
                 seconds: (diff.inSeconds +
@@ -246,7 +246,7 @@ class TempController extends GetxController {
             second.value = strDigits(diff.inSeconds.remainder(60));
           }
         }
-        print(response);
+        // print(response);
       },
       failureCallback: (status, message) {
         if (!isFromButton) {
@@ -254,9 +254,9 @@ class TempController extends GetxController {
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
 
-        print(" error");
+        //  print(" error");
 
-        print(status);
+        // print(status);
       },
     );
   }
@@ -270,7 +270,7 @@ class TempController extends GetxController {
     Map<String, dynamic> dict = {};
 
     FormData data = FormData.fromMap(dict);
-    print(dict);
+    //print(dict);
     return NetworkClient.getInstance.callApi(
       context,
       baseURL,
@@ -292,7 +292,7 @@ class TempController extends GetxController {
             sTime.hour, sTime.minute, sTime.second);
         serverDate = s["date"].toString();
         serverTime = s["time"].toString();
-        print(response);
+        //print(response);
       },
       failureCallback: (status, message) {
         if (!isFromButton) {
@@ -300,9 +300,9 @@ class TempController extends GetxController {
         }
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
 
-        print(" error");
+        //print(" error");
 
-        print(status);
+        //print(status);
       },
     );
   }
@@ -317,7 +317,7 @@ class TempController extends GetxController {
     hasData.value = false;
     //print("aa" + box.read(StringConstants.userEmailAddress));
     dict["email"] = box.read(StringConstants.userEmailAddress);
-    print(box.read(StringConstants.userEmailAddress));
+    //print(box.read(StringConstants.userEmailAddress));
     await callApiForGetServerTime(context: context, isFromButton: true);
     // dict["date"] = DateFormat('yyyy-MM-dd').format(DateTime.now());
     dict["date"] = (!isNullEmptyOrFalse(serverDate))
@@ -337,7 +337,7 @@ class TempController extends GetxController {
       params: data,
       successCallback: (response, message) {
         hasData.value = true;
-        print(response);
+        // print(response);
         if (!isFromButton) {
           app.resolve<CustomDialogs>().hideCircularDialog(context);
         }
