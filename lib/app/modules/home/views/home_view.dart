@@ -82,9 +82,11 @@ class HomeView extends GetWidget<HomeController> {
                                 series: _getDefaultColumnSeries(
                                     controller: controller),
                                 tooltipBehavior: TooltipBehavior(
-                                    enable: true,
-                                    header: '',
-                                    canShowMarker: false),
+                                  enable: true,
+                                  header: '',
+                                  canShowMarker: false,
+                                  format: 'point.x - point.y',
+                                ),
                               ),
                             ),
                           ],
