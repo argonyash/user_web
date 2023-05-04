@@ -23,13 +23,13 @@ void main() async {
   if (isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
     box.write(StringConstants.isUserLogIn, false);
   }
- // print("asasa");
+  // print("asasa");
   runApp(
     GetMaterialApp(
       localizationsDelegates: [
         MonthYearPickerLocalizations.delegate,
       ],
-      title: "Application",
+      title: "Argon User",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
