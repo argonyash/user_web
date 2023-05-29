@@ -23,7 +23,7 @@ class ChartSampleData {
   final dynamic x;
 
   /// Holds y value of the datapoint
-  final num? y;
+  final double? y;
 
   /// Holds x value of the datapoint
   final dynamic xValue;

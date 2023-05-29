@@ -54,7 +54,7 @@ class HomeView extends GetWidget<HomeController> {
                                   ),
                                 ),
                                 Text(
-                                  "${(Duration(seconds: controller.monthTotalTime.value).inHours / controller.dataList.length).toStringAsFixed(2)}",
+                                  "${controller.avgTime.toStringAsFixed(2)}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: MySize.size26,

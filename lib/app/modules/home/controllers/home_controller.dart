@@ -64,7 +64,7 @@ class HomeController extends GetxController {
   RxBool hasData = false.obs;
   RxBool myHasData = false.obs;
   List<String> columnData = ["Status", "Time"];
-
+  RxDouble avgTime = 0.0.obs;
   RxInt totalMonthHourVisibleCounter = 0.obs;
   @override
   void onInit() {
@@ -272,7 +272,7 @@ class HomeController extends GetxController {
       MethodType.Post,
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
-      successCallback: (response, message) {
+      successCallback: (response, message) async {
         app.resolve<CustomDialogs>().hideCircularDialog(context);
         // print(response);
 
@@ -281,13 +281,13 @@ class HomeController extends GetxController {
           webClockIn.toggle();
           if (!webClockIn.value) {
             stopTimer();
-            callApiForClockInOrOutStatus(
+            await callApiForClockInOrOutStatus(
                 context: Get.context!, isFromButton: true);
           } else {
-            callApiForClockInOrOutStatus(
+            await callApiForClockInOrOutStatus(
                 context: Get.context!, isFromButton: true);
           }
-          getAttendanceDetails(context: Get.context!);
+          await getAttendanceDetails(context: Get.context!);
         }
       },
       failureCallback: (status, message) {
@@ -577,14 +577,25 @@ class HomeController extends GetxController {
             attendanceDetailsList.forEach((element) {
               if (!isNullEmptyOrFalse(element.data)) {
                 if (!isNullEmptyOrFalse(element.data!.last)) {
+                  String time = _printDuration(
+                      Duration(seconds: int.parse(element.data!.last.total!)));
+                  print(time.split(":")[0] + "." + time.split(":")[1]);
+                  double chartTime = double.parse(time.split(":")[0] +
+                      "." +
+                      time.split(":")[1].substring(0, 2));
+                  print(chartTime);
                   chartData.add(
                     ChartSampleData(
                       x: element.data!.last.date!,
-                      y: Duration(seconds: int.parse(element.data!.last.total!))
-                          .inHours,
+                      y: chartTime,
                     ),
                   );
                 }
+              }
+              if (!isNullEmptyOrFalse(chartData)) {
+                avgTime.value =
+                    chartData.map((m) => m.y).reduce((a, b) => a! + b!)! /
+                        chartData.length;
               }
               // element.data!.forEach((element) {
               //   dataEntryListChart.add(element);
@@ -592,6 +603,10 @@ class HomeController extends GetxController {
             });
           }
           log(dataEntryList.length.toString());
+          attendanceDetailsList.refresh();
+          dataEntryList.refresh();
+          dataList.refresh();
+          update();
         }
       },
       failureCallback: (status, message) {
@@ -669,4 +684,11 @@ String getTotalTime(int sec) {
 
 String strDigits(int n) {
   return n.toString().padLeft(2, '0');
+}
+
+String _printDuration(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
+  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+  String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+  return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
 }
