@@ -77,12 +77,32 @@ class HomeController extends GetxController {
 
       lastDateOfMonth = getLastDateOfMonth(selectedMonth.value);
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        myApiCallApiForGetServerTime(context: Get.context!);
+        if (!isNullEmptyOrFalse(box.read(StringConstants.OneTimeApiCall))) {
+          if (box.read(StringConstants.OneTimeApiCall) ==
+              DateTime.now().toString()) {
+          } else {
+            await OneTimeApiCall(context: Get.context!);
+          }
+        } else {
+          await OneTimeApiCall(context: Get.context!);
+        }
+        await myApiCallApiForGetServerTime(context: Get.context!);
         await getAttendanceDetails(context: Get.context!);
         // callApiForGetDateWiseEntry(context: Get.context!);
         // callApiForClockInOrOutStatus(context: Get.context!);
         // callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
       });
+    }
+    if (!isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
+      if (!isNullEmptyOrFalse(box.read(StringConstants.OneTimeApiCall))) {
+        if (box.read(StringConstants.OneTimeApiCall) ==
+            DateTime.now().toString()) {
+        } else {
+          OneTimeApiCall(context: Get.context!);
+        }
+      } else {
+        OneTimeApiCall(context: Get.context!);
+      }
     }
 
     super.onInit();
@@ -120,6 +140,27 @@ class HomeController extends GetxController {
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
         //print(" error");
         //print(status);
+      },
+    );
+  }
+
+  OneTimeApiCall({required BuildContext context}) {
+    myHasData.value = false;
+    Map<String, dynamic> dict = {};
+    dict["email"] = box.read(StringConstants.userEmailAddress);
+    FormData data = FormData.fromMap(dict);
+    return NetworkClient.getInstance.callApi(
+      context,
+      baseURL,
+      ApiConstant.auto_out,
+      MethodType.Post,
+      headers: NetworkClient.getInstance.getAuthHeaders(),
+      params: data,
+      successCallback: (response, message) {
+        box.write(StringConstants.OneTimeApiCall, DateTime.now().toString());
+      },
+      failureCallback: (status, message) {
+        app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
       },
     );
   }

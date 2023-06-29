@@ -5,5 +5,6 @@ class StringConstants {
   static const isUserLogIn = "isUserLogIn";
   static const userName = "userName";
   static const role = "role";
+  static const OneTimeApiCall = "OneTimeApiCall";
   static const userImage = "userImage";
 }

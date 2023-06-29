@@ -284,7 +284,7 @@ class LeaveView extends GetWidget<LeaveController> {
                                                                           .toString() ==
                                                                       "rejected")
                                                                   ? "Rejected"
-                                                                  : "Declined",
+                                                                  : "Approved",
                                                           style: TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
