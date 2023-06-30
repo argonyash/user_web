@@ -74,7 +74,6 @@ class HomeController extends GetxController {
       Get.offAllNamed(Routes.LOGIN);
     } else {
       selectedIndexForEntry = 0.obs;
-
       lastDateOfMonth = getLastDateOfMonth(selectedMonth.value);
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (!isNullEmptyOrFalse(box.read(StringConstants.OneTimeApiCall))) {
@@ -94,18 +93,6 @@ class HomeController extends GetxController {
         // callApiForGetTodayEntry(context: Get.context!, isFromButton: true);
       });
     }
-    if (!isNullEmptyOrFalse(box.read(StringConstants.isUserLogIn))) {
-      if (!isNullEmptyOrFalse(box.read(StringConstants.OneTimeApiCall))) {
-        if (box.read(StringConstants.OneTimeApiCall) ==
-            DateTime.now().toString()) {
-        } else {
-          OneTimeApiCall(context: Get.context!);
-        }
-      } else {
-        OneTimeApiCall(context: Get.context!);
-      }
-    }
-
     super.onInit();
 
     myDuration = Duration(days: 5);
