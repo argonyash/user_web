@@ -79,7 +79,8 @@ class HomeController extends GetxController {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (!isNullEmptyOrFalse(box.read(StringConstants.OneTimeApiCall))) {
           if (box.read(StringConstants.OneTimeApiCall) ==
-              DateTime.now().toString()) {
+              DateTime.now().day.toString()) {
+            print(DateTime.now().day.toString());
           } else {
             await OneTimeApiCall(context: Get.context!);
           }
@@ -157,7 +158,9 @@ class HomeController extends GetxController {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: data,
       successCallback: (response, message) {
-        box.write(StringConstants.OneTimeApiCall, DateTime.now().toString());
+        box.write(
+            StringConstants.OneTimeApiCall, DateTime.now().day.toString());
+        print(DateTime.now().day.toString());
       },
       failureCallback: (status, message) {
         app.resolve<CustomDialogs>().getDialog(title: "Failed", desc: message);
