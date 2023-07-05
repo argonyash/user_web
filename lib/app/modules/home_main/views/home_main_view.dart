@@ -399,6 +399,10 @@ class HomeMainView extends GetWidget<HomeMainController> {
                                     onPressed: () {
                                       box.write(
                                           StringConstants.OneTimeApiCall, "");
+                                      box.write(StringConstants.userName, "");
+                                      box.write(StringConstants.role, "");
+                                      box.write(
+                                          StringConstants.isUserLogIn, false);
                                       Get.offAllNamed(Routes.LOGIN);
                                     },
                                     icon: Icon(Icons.logout)),

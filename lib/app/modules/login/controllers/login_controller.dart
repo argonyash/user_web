@@ -69,7 +69,6 @@ class LoginController extends GetxController {
           box.write(StringConstants.isUserLogIn, true);
           box.write(StringConstants.userName, loginModel.name.toString());
           box.write(StringConstants.role, loginModel.role.toString());
-          box.write(StringConstants.role, loginModel.role.toString());
           box.write(StringConstants.userImage, loginModel.img.toString());
         } else {
           app
